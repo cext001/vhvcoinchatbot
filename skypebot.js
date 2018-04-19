@@ -64,7 +64,7 @@ module.exports = class SkypeBot {
     }
 
     processMessage(session) {
-        console.log("inside process message");
+        
         let messageText = session.message.text;
         let sender = session.message.address.conversation.id;
         if (messageText && sender) {
@@ -85,6 +85,7 @@ module.exports = class SkypeBot {
                 });
 
             apiaiRequest.on('response', (response) => {
+                console.log("response");
                 if (this._botConfig.devConfig) {
                     console.log(sender, "Received api.ai response");
                 }

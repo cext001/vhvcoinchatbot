@@ -1,35 +1,22 @@
-'use strict';
-//require('dotenv').config();
-const apiai = require('apiai');
-const express = require('express');
-const bodyParser = require('body-parser');
+var restify = require('restify');
+var builder = require('botbuilder');
 
-const SkypeBot = require('./skypebot');
-const SkypeBotConfig = require('./skypebotconfig');
-
-const REST_PORT = (process.env.PORT || 5000);
-
-const botConfig = new SkypeBotConfig(
-    process.env.APIAI_ACCESS_TOKEN,
-    process.env.APIAI_LANG,
-    process.env.APP_ID,
-    process.env.APP_SECRET
-);
-
-const skypeBot = new SkypeBot(botConfig);
-
-// console timestamps
-require('console-stamp')(console, 'yyyy.mm.dd HH:MM:ss.l');
-
-const app = express();
-app.use(bodyParser.json());
-
-app.post('/api/messages', skypeBot.botService.listen());
-app.get('/api/messages',  function (req, res) {
-    console.log("here hit");
-    res.send("here hit");
+// Setup Restify Server
+var server = restify.createServer();
+server.listen(process.env.PORT || 3978, function () {
+    console.log('%s listening to %s', server.name, server.url);
 });
 
-app.listen(REST_PORT, function () {
-    console.log('Rest service ready on port ' + REST_PORT);
+// Create chat connector for communicating with the Bot Framework Service
+var connector = new builder.ChatConnector({
+    appId: process.env.APP_ID,
+    appPassword: process.env.APP_SECRET
+});
+
+// Listen for messages from users 
+server.post('/api/messages', connector.listen());
+
+// Receive messages from the user and respond by echoing each message back (prefixed with 'You said:')
+var bot = new builder.UniversalBot(connector, function (session) {
+    session.send("You said: %s", session.message.text);
 });

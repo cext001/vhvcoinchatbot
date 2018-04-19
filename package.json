@@ -14,12 +14,7 @@
   "author": "Bimal Kumar H",
   "license": "",
   "dependencies": {
-    "apiai": "^4.0.3",
-    "body-parser": "^1.18.2",
     "botbuilder": "^3.14.1",
-    "console-stamp": "^0.2.6",
-    "express": "^4.16.3",
-    "morgan": "~1.7.0",
-    "node-uuid": "^1.4.8"
+    "restify": "^7.1.1"
   }
 }

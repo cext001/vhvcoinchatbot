@@ -1,7 +1,7 @@
+const fs = require('fs');
 var restify = require('restify');
 
 var handler = function (request, res) {
-    console.log(request);
     if (request.method === 'POST') {
         var body = '';
         request.on('data', function (data) {
@@ -31,7 +31,7 @@ var handler = function (request, res) {
 // Setup Restify Server
 var server = restify.createServer();
 
-server.listen(process.env.PORT || 8080, function () {
+server.listen(process.env.port || process.env.PORT || 8080, function () {
     console.log('%s listening to %s', server.name, server.url);
 });
 

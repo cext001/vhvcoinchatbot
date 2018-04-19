@@ -11,7 +11,11 @@
   "author": "Bimal Kumar H",
   "license": "IST",
   "dependencies": {
-    "botbuilder": "^3.14.1",
-    "restify": "^7.1.1"
+    "apiai": "*",
+    "body-parser": "*",
+    "botbuilder": "*",
+    "console-stamp": "*",
+    "express": "*",
+    "node-uuid": "*"
   }
 }

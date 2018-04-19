@@ -1,25 +1,31 @@
-var restify = require('restify');
-var builder = require('botbuilder');
+'use strict';
 
-var server = restify.createServer();
-server.listen(process.env.port || process.env.PORT || 4000, function () {
-    console.log('%s listening to %s', server.name, server.url);
-});
-// Create chat bot
-var connector = new builder.ChatConnector({
-    appId: process.env.APP_ID,
-    appPassword: process.env.APP_SECRET
-});
+const apiai = require('apiai');
+const express = require('express');
+const bodyParser = require('body-parser');
 
-var bot = new builder.UniversalBot(connector);
+const SkypeBot = require('./skypebot');
+const SkypeBotConfig = require('./skypebotconfig');
 
-server.post('/', connector.listen());
+const REST_PORT = (process.env.PORT || 5000);
 
-server.get('/', function (req, res) {
-    if (req.query.hub.verify_token === _config.ms.messengerSecret) {
-        res.write(req.query.hub.challenge);
-        res.end();
-    } else {
-        res.send('Error, wrong validation token');
-    }
+const botConfig = new SkypeBotConfig(
+    process.env.APIAI_ACCESS_TOKEN,
+    process.env.APIAI_LANG,
+    process.env.APP_ID,
+    process.env.APP_SECRET
+);
+
+const skypeBot = new SkypeBot(botConfig);
+
+// console timestamps
+require('console-stamp')(console, 'yyyy.mm.dd HH:MM:ss.l');
+
+const app = express();
+app.use(bodyParser.json());
+
+app.post('/chat', skypeBot.botService.listen());
+
+app.listen(REST_PORT, function () {
+    console.log('Rest service ready on port ' + REST_PORT);
 });

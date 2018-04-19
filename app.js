@@ -1,5 +1,5 @@
 'use strict';
-
+//require('dotenv').config();
 const apiai = require('apiai');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -24,7 +24,10 @@ require('console-stamp')(console, 'yyyy.mm.dd HH:MM:ss.l');
 const app = express();
 app.use(bodyParser.json());
 
-app.post('/chat', skypeBot.botService.listen());
+app.post('/api/messages', skypeBot.botService.listen());
+app.get('/api/messages',  function (req, res) {
+    console.log("here hit");
+});
 
 app.listen(REST_PORT, function () {
     console.log('Rest service ready on port ' + REST_PORT);

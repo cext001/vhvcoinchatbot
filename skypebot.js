@@ -67,7 +67,6 @@ module.exports = class SkypeBot {
 
         let messageText = session.message.text;
         let sender = session.message.address.conversation.id;
-console.log("inside process messaage");
         if (messageText && sender) {
 
             console.log(sender, messageText);

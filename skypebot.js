@@ -64,7 +64,7 @@ module.exports = class SkypeBot {
     }
 
     processMessage(session) {
-
+        console.log("inside process message");
         let messageText = session.message.text;
         let sender = session.message.address.conversation.id;
         if (messageText && sender) {
@@ -135,7 +135,7 @@ module.exports = class SkypeBot {
 
                     break;
 
-                    //message.type 1 means card message
+                //message.type 1 means card message
                 case 1:
                     {
                         let heroCard = new botbuilder.HeroCard(session).title(message.title);
@@ -183,7 +183,7 @@ module.exports = class SkypeBot {
 
                     break;
 
-                    //message.type 2 means quick replies message
+                //message.type 2 means quick replies message
                 case 2:
                     {
 
@@ -209,7 +209,7 @@ module.exports = class SkypeBot {
 
                     break;
 
-                    //message.type 3 means image message
+                //message.type 3 means image message
                 case 3:
                     {
                         let heroCard = new botbuilder.HeroCard(session).images([botbuilder.CardImage.create(session, message.imageUrl)]);

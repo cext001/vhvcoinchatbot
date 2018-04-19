@@ -1,21 +1,35 @@
 'use strict';
 
-var restify = require('restify');
-var builder = require('botbuilder');
+const apiai = require('apiai');
+const express = require('express');
+const bodyParser = require('body-parser');
 
-// Create bot and add dialogs
-var connector = new builder.ChatConnector({
-    appId: process.env.APP_ID,
-    appPassword: process.env.APP_SECRET
-});
-var bot = new builder.UniversalBot(connector);
-bot.dialog('/', function (session) {
-    session.send('Hello World');
-});
+const SkypeBot = require('./skypebot');
+const SkypeBotConfig = require('./skypebotconfig');
 
-// Setup Restify Server
-var server = restify.createServer();
-server.post('/chat', connector.listen());
-server.listen(process.env.port || 3978, function () {
-    console.log('%s listening to %s', server.name, server.url);
+const REST_PORT = (process.env.PORT || 5000);
+
+const botConfig = new SkypeBotConfig(
+    process.env.APIAI_ACCESS_TOKEN,
+    process.env.APIAI_LANG,
+    process.env.APP_ID,
+    process.env.APP_SECRET
+);
+
+const skypeBot = new SkypeBot(botConfig);
+
+// console timestamps
+require('console-stamp')(console, 'yyyy.mm.dd HH:MM:ss.l');
+
+const app = express();
+app.use(bodyParser.json());
+
+app.post('/chat', skypeBot.botService.listen());
+
+app.listen(REST_PORT, function () {
+    console.log(process.env.APIAI_ACCESS_TOKEN);
+    console.log(process.env.APIAI_LANG);
+    console.log(process.env.APP_ID);
+    console.log(process.env.APP_SECRET);
+    console.log('Rest service ready on port ' + REST_PORT);
 });

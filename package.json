@@ -8,14 +8,14 @@
     "start": "node app.js"
   },
   "keywords": [],
-  "engines": {
-    "node": ">=5.6.0"
-  },
   "author": "Bimal Kumar H",
-  "license": "",
+  "license": "IST",
   "dependencies": {
+    "apiai": "^4.0.3",
+    "body-parser": "^1.18.2",
     "botbuilder": "^3.14.1",
-    "morgan": "^1.9.0",
-    "restify": "^7.1.1"
+    "console-stamp": "^0.2.6",
+    "express": "^4.16.3",
+    "node-uuid": "^1.4.8"
   }
 }

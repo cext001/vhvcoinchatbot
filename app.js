@@ -27,9 +27,5 @@ app.use(bodyParser.json());
 app.post('/chat', skypeBot.botService.listen());
 
 app.listen(REST_PORT, function () {
-    console.log(process.env.APIAI_ACCESS_TOKEN);
-    console.log(process.env.APIAI_LANG);
-    console.log(process.env.APP_ID);
-    console.log(process.env.APP_SECRET);
     console.log('Rest service ready on port ' + REST_PORT);
 });

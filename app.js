@@ -1,31 +1,39 @@
-'use strict';
+var restify = require('restify');
 
-const apiai = require('apiai');
-const express = require('express');
-const bodyParser = require('body-parser');
+var handler = function (request, res) {
+    console.log(request);
+    if (request.method === 'POST') {
+        var body = '';
+        request.on('data', function (data) {
+            body += data;
+            // 1e6 === 1 * Math.pow(10, 6) === 1 * 1000000 ~~~ 1MB
+            if (body.length > 1e6) {
+                // FLOOD ATTACK OR FAULTY CLIENT, NUKE REQUEST
+                request.connection.destroy();
+            }
+        });
+        request.on('end', function () {
 
-const SkypeBot = require('./skypebot');
-const SkypeBotConfig = require('./skypebotconfig');
+            console.log(body)
+            // use POST
 
-const REST_PORT = (process.env.PORT || 5000);
+        });
+    }
 
-const botConfig = new SkypeBotConfig(
-    process.env.APIAI_ACCESS_TOKEN,
-    process.env.APIAI_LANG,
-    process.env.APP_ID,
-    process.env.APP_SECRET
-);
+    res.writeHead(200, {'Content-Type': 'application/json'});
+    //res.end(parseCommands(req));
+    res.end(`{
+    "type": "message",
+    "text": "This is a reply!"
+    }`);
+};
 
-const skypeBot = new SkypeBot(botConfig);
+// Setup Restify Server
+var server = restify.createServer();
 
-// console timestamps
-require('console-stamp')(console, 'yyyy.mm.dd HH:MM:ss.l');
-
-const app = express();
-app.use(bodyParser.json());
-
-app.post('/chat', skypeBot.botService.listen());
-
-app.listen(REST_PORT, function () {
-    console.log('Rest service ready on port ' + REST_PORT);
+server.listen(process.env.PORT || 8080, function () {
+    console.log('%s listening to %s', server.name, server.url);
 });
+
+// Listen for messages from users
+server.post('/chat', handler);

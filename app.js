@@ -27,6 +27,7 @@ app.use(bodyParser.json());
 app.post('/api/messages', skypeBot.botService.listen());
 app.get('/api/messages',  function (req, res) {
     console.log("here hit");
+    res.send("here hit");
 });
 
 app.listen(REST_PORT, function () {

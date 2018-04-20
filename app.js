@@ -35,6 +35,11 @@ app.post('/api/messages', (req, res) => {
                         },
                         {
                             platform: "skype",
+                            speech: "Can you please help me with the type of claim that you want to initiate?",
+                            type: 0
+                        },
+                        {
+                            platform: "skype",
                             subtitle: "",
                             title: "Please select",
                             type: 1,

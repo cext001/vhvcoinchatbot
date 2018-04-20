@@ -12,13 +12,15 @@ const REST_PORT = process.env.PORT || 8080;
 app.post('/api/messages', (req, res) => {
     console.log('Dialogflow Request body: ' + JSON.stringify(req.body));
     if (req.body.result) {
-        if (req.body.result.action == "claim.raiseissue") {
-            console.log("inside: claim.raiseissue new");
-            res.json({
-                speech: "ggg",
-                displayText: "fdfdf",
-                source: '/incident/getstatus'
-            }).end();
+        if (req.body.result.action == "claimraiseissue.claimraiseissue-custom") {
+            console.log("inside: claimraiseissue.claimraiseissue-custom");
+            if(req.body.result.resolvedQuery == "Yes Please") {
+                res.json({
+                    speech: "Please can you tell me your policy number",
+                    displayText: "Please can you tell me your policy number",
+                    source: ''
+                }).end();
+            }
         }
     }
 })

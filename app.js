@@ -14,7 +14,6 @@ app.post('/api/messages', (req, res) => {
     if (req.body.queryResult) {
         if (req.body.queryResult.action === "claim.raiseissue") {
             res.json({
-                "speech": "Sdsds",
                 "messages": [
                     {
                         "buttons": [

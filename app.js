@@ -11,24 +11,28 @@ const REST_PORT = process.env.PORT || 8080;
 
 app.post('/api/messages', (req, res) => {
     console.log('Dialogflow Request body: ' + JSON.stringify(req.body));
-    res.json({
-        "speech": "Sdsds",
-        "messages": [
-            {
-                "buttons": [
+    if (req.body.queryResult) {
+        if (req.body.queryResult.action === "claim.raiseissue") {
+            res.json({
+                "speech": "Sdsds",
+                "messages": [
                     {
-                        "postback": "Card Link URL or text",
-                        "text": "Card Link Title"
+                        "buttons": [
+                            {
+                                "postback": "Card Link URL or text",
+                                "text": "Card Link Title"
+                            }
+                        ],
+                        "imageUrl": "http://urltoimage.com",
+                        "platform": "skype",
+                        "subtitle": "Card Subtitle",
+                        "title": "Card Title",
+                        "type": 1
                     }
-                ],
-                "imageUrl": "http://urltoimage.com",
-                "platform": "skype",
-                "subtitle": "Card Subtitle",
-                "title": "Card Title",
-                "type": 1
-            }
-        ]
-    });
+                ]
+            }).end();
+        }
+    }
 })
 
 app.listen(REST_PORT, function () {

@@ -7,10 +7,12 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
 
+const REST_PORT = process.env.PORT || 8080;
+
 app.post('/api/messages', (req, res) => {
     console.log('Dialogflow Request body: ' + JSON.stringify(req.body));
     res.json({
-        "speech":"Sdsds",
+        "speech": "Sdsds",
         "messages": [
             {
                 "buttons": [

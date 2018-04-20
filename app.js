@@ -28,12 +28,16 @@ app.post('/api/messages', (req, res) => {
                 console.log("inside: claim.getdateandtime");
                 res.json({
                     messages: [
-                        /*{
+                        {
                             platform: "skype",
                             speech: "sure, thank you",
                             type: 0
-                        },*/
+                        },
                         {
+                            platform: "skype",
+                            subtitle: "",
+                            title: "Can you please help me with the type of claim that SHIFT+ENTER you want to initiate?",
+                            type: 1,
                             buttons: [
                                 {
                                     postback: "Auto Claim",
@@ -47,11 +51,8 @@ app.post('/api/messages', (req, res) => {
                                     postback: "Incident Only",
                                     text: "Incident Only"
                                 }
-                            ],
-                            platform: "skype",
-                            subtitle: "",
-                            title: "Can you please help me with the type of \n claim that you want to initiate?",
-                            type: 1
+                            ]
+
                         }
                     ]
                 }).end();

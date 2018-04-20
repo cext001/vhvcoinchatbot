@@ -5,7 +5,7 @@ const app = express()
 const REST_PORT = process.env.PORT || 5000;
 
 app.post('/chat', (req, res) => {
-    console.log(req);
+    console.log(req.body);
     if (req.body.queryResult.action = "claim.raiseissue") {
         res.json({"messages": [
             {

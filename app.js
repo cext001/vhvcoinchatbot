@@ -30,14 +30,10 @@ app.post('/api/messages', (req, res) => {
                     messages: [
                         {
                             platform: "skype",
-                            speech: "sure, thank you",
+                            speech: "Sure, thank you. Can you please help me with the type of claim that you want to initiate?",
                             type: 0
                         },
                         {
-                            platform: "skype",
-                            speech: "Can you please help me with the type of claim that you want to initiate?",
-                            type: 0
-                        }, {
                             platform: "skype",
                             subtitle: "",
                             title: "",

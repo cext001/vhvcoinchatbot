@@ -15,6 +15,7 @@ app.post('/api/messages', (req, res) => {
         if (req.body.result.action == "claimraiseissue.claimraiseissue-custom") {
             console.log("inside: claimraiseissue.claimraiseissue-custom");
             if(req.body.result.resolvedQuery == "Yes Please") {
+                console.log("inside: claimraiseissue.claimraiseissue-custom user selected yes");
                 res.json({
                     speech: "Please can you tell me your policy number",
                     displayText: "Please can you tell me your policy number",

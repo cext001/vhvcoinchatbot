@@ -14,11 +14,11 @@ app.post('/api/messages', (req, res) => {
     if (req.body.queryResult) {
         console.log("Action: " + req.body.queryResult.action);
         if (req.body.queryResult.action === "claim.raiseissue") {
-            console.log("inside: claim.raiseissue");
+            console.log("inside: claim.raiseissue new");
             res.json({
-                "source": "webhook",
-                "displayText": "The current stock price for google is x USD",
-                "speech": "The current stock price for google is x USD"
+                speech: "ggg",
+                displayText: "fdfdf",
+                source: '/incident/getstatus'
             }).end();
         }
     }

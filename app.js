@@ -10,10 +10,10 @@ const SkypeBotConfig = require('./skypebotconfig');
 const REST_PORT = (process.env.PORT || 5000);
 
 const botConfig = new SkypeBotConfig(
-    process.env.APIAI_ACCESS_TOKEN,
-    process.env.APIAI_LANG,
-    process.env.APP_ID,
-    process.env.APP_SECRET
+    "b37323d3c6dd43eeb037567483e10160",
+    "en",
+    "f6f66a29-f184-48a0-9913-bda96c22be4f",
+    "bkVCGV20*%+foicfITP333@"
 );
 
 const skypeBot = new SkypeBot(botConfig);

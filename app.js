@@ -16,21 +16,9 @@ app.post('/api/messages', (req, res) => {
         if (req.body.queryResult.action === "claim.raiseissue") {
             console.log("inside: claim.raiseissue");
             res.json({
-                "messages": [
-                    {
-                        "buttons": [
-                            {
-                                "postback": "Card Link URL or text",
-                                "text": "Card Link Title"
-                            }
-                        ],
-                        "imageUrl": "http://urltoimage.com",
-                        "platform": "facebook",
-                        "subtitle": "Card Subtitle",
-                        "title": "Card Title",
-                        "type": 1
-                    }
-                ]
+                "source": "webhook",
+                "displayText": "The current stock price for google is x USD",
+                "speech": "The current stock price for google is x USD"
             }).end();
         }
     }

@@ -25,33 +25,31 @@ app.post('/api/messages', (req, res) => {
                 }
                 break;
             case "claim.getdateandtime":
+                console.log("inside: claim.getdateandtime");
                 res.json({
-                    messages: [/*{
-                        speech: "sure, thank you",
-                        displayText: "sure, thank you",
-                        type: 0
-                    }, {
-                        speech: "Can you please help me with the type of claim that you want to initiate?",
-                        displayText: "Can you please help me with the type of claim that you want to initiate?",
-                        type: 0
-                    }, */{
-                        buttons: [
-                            {
-                                postback: "Auto Claim",
-                                text: "Auto Claim"
-                            },
-                            {
-                                postback: "Glass Claim",
-                                text: "Glass Claim"
-                            },
-                            {
-                                postback: "Incident Only",
-                                text: "Incident Only"
-                            }
-                        ]
-                    }]
+                    messages: [
+                        {
+                            buttons: [
+                                {
+                                    postback: "Auto Claim",
+                                    text: "Auto Claim"
+                                },
+                                {
+                                    postback: "Glass Claim",
+                                    text: "Glass Claim"
+                                },
+                                {
+                                    postback: "Incident Only",
+                                    text: "Incident Only"
+                                }
+                            ],
+                            platform: "skype",
+                            subtitle: "",
+                            title: "Can you please help me with the type of claim that you want to initiate?",
+                            type: 1
+                        }
+                    ]
                 }).end();
-
                 break;
         }
     }

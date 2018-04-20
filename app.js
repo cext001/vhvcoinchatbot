@@ -16,22 +16,91 @@ app.post('/api/messages', (req, res) => {
         if (req.body.queryResult.action === "claim.raiseissue") {
             console.log("inside: claim.raiseissue");
             res.json({
+                "speech": "",
+                "displayText": "",
+                "data": {
+                  
+                },
+                "contextOut": [
+                  
+                ],
+                "source": "Webhook",
                 "messages": [
-                    {
-                        "buttons": [
-                            {
-                                "postback": "Card Link URL or text",
-                                "text": "Card Link Title"
+                  {
+                    "type": 4,
+                    "platform": "skype",
+                    "speech": "",
+                    "payload": {
+                      "skype": {
+                        "attachmentLayout": "list",
+                        "attachments": [
+                          {
+                            "contentType": "application\/vnd.microsoft.card.hero",
+                            "content": {
+                              "title": "Unit 2A",
+                              "subtitle": "",
+                              "text": "These timeslots are available for 2017-10-16",
+                              "images": [
+                                
+                              ],
+                              "buttons": [
+                                {
+                                  "type": "imBack",
+                                  "title": "from 13:00 until 14:00 Unit 2A",
+                                  "value": "from 13:00 until 14:00 Unit 2A"
+                                },
+                                {
+                                  "type": "imBack",
+                                  "title": "from 14:00 until 15:00 Unit 2A",
+                                  "value": "from 14:00 until 15:00 Unit 2A"
+                                },
+                                {
+                                  "type": "imBack",
+                                  "title": "from 15:00 until 16:00 Unit 2A",
+                                  "value": "from 15:00 until 16:00 Unit 2A"
+                                }
+                              ]
                             }
-                        ],
-                        "imageUrl": "http://urltoimage.com",
-                        "platform": "skype",
-                        "subtitle": "Card Subtitle",
-                        "title": "Card Title",
-                        "type": 1
+                          },
+                          {
+                            "contentType": "application\/vnd.microsoft.card.hero",
+                            "content": {
+                              "title": "Unit 1",
+                              "subtitle": "",
+                              "text": "These timeslots are available for 2017-10-16",
+                              "images": [
+                                
+                              ],
+                              "buttons": [
+                                {
+                                  "type": "imBack",
+                                  "title": "from 13:00 until 14:00 Unit 1",
+                                  "value": "from 13:00 until 14:00 Unit 1"
+                                },
+                                {
+                                  "type": "imBack",
+                                  "title": "from 14:00 until 15:00 Unit 1",
+                                  "value": "from 14:00 until 15:00 Unit 1"
+                                },
+                                {
+                                  "type": "imBack",
+                                  "title": "from 15:00 until 16:00 Unit 1",
+                                  "value": "from 15:00 until 16:00 Unit 1"
+                                },
+                                {
+                                  "type": "imBack",
+                                  "title": "from 16:00 until 17:00 Unit 1",
+                                  "value": "from 16:00 until 17:00 Unit 1"
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
                     }
+                  }
                 ]
-            }).end();
+              }).end();
         }
     }
 })

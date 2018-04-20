@@ -16,12 +16,19 @@ app.post('/api/messages', (req, res) => {
         if (req.body.queryResult.action === "claim.raiseissue") {
             console.log("inside: claim.raiseissue");
             res.json({
-                "source": "Webhook",
                 "messages": [
                     {
-                        "platform": "skype",
-                        "speech": "Text response",
-                        "type": 0
+                        "buttons": [
+                            {
+                                "postback": "Card Link URL or text",
+                                "text": "Card Link Title"
+                            }
+                        ],
+                        "imageUrl": "http://urltoimage.com",
+                        "platform": "facebook",
+                        "subtitle": "Card Subtitle",
+                        "title": "Card Title",
+                        "type": 1
                     }
                 ]
             }).end();

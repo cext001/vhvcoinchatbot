@@ -28,11 +28,11 @@ app.post('/api/messages', (req, res) => {
                 console.log("inside: claim.getdateandtime");
                 res.json({
                     messages: [
-                        {
+                        /*{
                             platform: "skype",
                             speech: "sure, thank you",
                             type: 0
-                        },
+                        },*/
                         {
                             buttons: [
                                 {
@@ -49,8 +49,8 @@ app.post('/api/messages', (req, res) => {
                                 }
                             ],
                             platform: "skype",
-                            /*subtitle: "",
-                            title: "Can you please help me with the type of claim that you want to initiate?",*/
+                            subtitle: "",
+                            title: "Can you please help me with <br>the type of claim that you want to initiate?",
                             type: 1
                         }
                     ]

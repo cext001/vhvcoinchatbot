@@ -50,7 +50,7 @@ app.post('/api/messages', (req, res) => {
                             ],
                             platform: "skype",
                             subtitle: "",
-                            title: "Can you please help me with <br>the type of claim that you want to initiate?",
+                            title: "Can you please help me with the type of \n claim that you want to initiate?",
                             type: 1
                         }
                     ]

@@ -14,7 +14,7 @@ app.post('/api/messages', (req, res) => {
     console.log(req.body.result);
     if (req.body.result) {
         console.log("Action: " + req.body.queryResult.action);
-        if (req.body.result.action === "claim.raiseissue") {
+        if (req.body.result.action == "claim.raiseissue") {
             console.log("inside: claim.raiseissue new");
             res.json({
                 speech: "ggg",

@@ -11,9 +11,9 @@ const REST_PORT = process.env.PORT || 8080;
 
 app.post('/api/messages', (req, res) => {
     console.log('Dialogflow Request body: ' + JSON.stringify(req.body));
-    if (req.body.queryResult) {
+    if (req.body.result) {
         console.log("Action: " + req.body.queryResult.action);
-        if (req.body.queryResult.action === "claim.raiseissue") {
+        if (req.body.result.action === "claim.raiseissue") {
             console.log("inside: claim.raiseissue new");
             res.json({
                 speech: "ggg",

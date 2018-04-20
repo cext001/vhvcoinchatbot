@@ -34,20 +34,22 @@ app.post('/api/messages', (req, res) => {
                         speech: "Can you please help me with the type of claim that you want to initiate?",
                         displayText: "Can you please help me with the type of claim that you want to initiate?",
                         type: 0
-                    }], buttons: [
-                        {
-                            postback: "Auto Claim",
-                            text: "Auto Claim"
-                        },
-                        {
-                            postback: "Glass Claim",
-                            text: "Glass Claim"
-                        },
-                        {
-                            postback: "Incident Only",
-                            text: "Incident Only"
-                        }
-                    ],
+                    }, {
+                        buttons: [
+                            {
+                                postback: "Auto Claim",
+                                text: "Auto Claim"
+                            },
+                            {
+                                postback: "Glass Claim",
+                                text: "Glass Claim"
+                            },
+                            {
+                                postback: "Incident Only",
+                                text: "Incident Only"
+                            }
+                        ]
+                    }]
                 }).end();
 
                 break;

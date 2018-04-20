@@ -25,6 +25,9 @@ const app = express();
 app.use(bodyParser.json());
 
 app.post('/chat', skypeBot.botService.listen());
+app.get('/home', function(req, res) {
+    res.send("home");
+});
 
 app.listen(REST_PORT, function () {
     console.log('Rest service ready on port ' + REST_PORT);

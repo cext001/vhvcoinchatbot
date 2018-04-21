@@ -209,9 +209,9 @@ app.post('/api/messages', (req, res) => {
                 console.log("inside claim.getdamegedparts");
                 if (req.body.result.resolvedQuery == "Finish") {
                 } else {
-                    console.log(req.body.result.contexts.parameters);
-                    /*var verchiclepartslist = "";
-                    var verchiclepartsincontext = req.body.result.contexts.parameters.partsofvehicle;
+                    console.log(req.body.result.contexts[0].parameters);
+                    var verchiclepartslist = "";
+                    var verchiclepartsincontext = req.body.result.contexts[0].parameters.partsofvehicle;
                     var vehicleparts = verchiclepartsincontext.split(',');
                     if (!(vehicleparts.indexOf(verchiclepartsincontext) > -1) && vehicleparts.length) {
                         verchiclepartslist += "," + verchiclepartsincontext;
@@ -224,14 +224,14 @@ app.post('/api/messages', (req, res) => {
                             {
                                 "name": "vehicle-damagedpart",
                                 "parameters": {
-                                    "partsofvehicle": req.body.result.contexts.parameters.parameters.partsofvehicle,
-                                    "partsofvehicle.original": req.body.result.contexts.parameters.parameters.partsofvehicle.original,
+                                    "partsofvehicle": req.body.result.contexts[0].parameters.parameters.partsofvehicle,
+                                    "partsofvehicle.original": req.body.result.contexts[0].parameters.parameters.partsofvehicle.original,
                                     "partsofvehiclelist": verchiclepartslist
                                 },
                                 "lifespan": 5
                             }
                         ]
-                    }).end();*/
+                    }).end();
                 }
                 break;
         }

@@ -160,8 +160,8 @@ app.post('/api/messages', (req, res) => {
                     ]
                 }).end();
                 break;
-                case "claim.getcauseofdamage-no-custom-yes":
-                console.log("inside: claim.getcauseofdamage-no-custom-yes");
+            case "claimgetcauseofdamage.claimgetcauseofdamage-no.claimgetcauseofdamage-no-yes":
+                console.log("inside: claimgetcauseofdamage.claimgetcauseofdamage-no.claimgetcauseofdamage-no-yes");
                 res.json({
                     messages: [
                         {

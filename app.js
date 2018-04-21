@@ -30,7 +30,7 @@ app.post('/api/messages', (req, res) => {
                     messages: [
                         {
                             platform: "skype",
-                            speech: "Sure, thank you. Can you please help me with the type of claim that you want to initiate?",
+                            speech: "Sure, thank you.",
                             type: 0
                         },
                         {
@@ -55,6 +55,92 @@ app.post('/api/messages', (req, res) => {
                                 {
                                     postback: "Incident Only",
                                     text: "Incident Only"
+                                }
+                            ]
+
+                        }
+                    ]
+                }).end();
+                break;
+            case "claim.getclaimtype":
+                console.log("inside: claim.getclaimtype");
+                res.json({
+                    messages: [
+                        {
+                            platform: "skype",
+                            speech: "Now please help me out with the cause of damage?",
+                            type: 0
+                        },
+                        {
+                            platform: "skype",
+                            subtitle: "",
+                            title: "Please select",
+                            type: 1,
+                            buttons: [
+                                {
+                                    postback: "Fire",
+                                    text: "Fire"
+                                },
+                                {
+                                    postback: "Collision with pedestrian",
+                                    text: "Collision with pedestrian"
+                                },
+                                {
+                                    postback: "Collision with another vehicle",
+                                    text: "Collision with another vehicle"
+                                },
+                                {
+                                    postback: "Collision with animal",
+                                    text: "Collision with animal"
+                                },
+                                {
+                                    postback: "Collision with Train or Bus",
+                                    text: "Collision with Train or Bus"
+                                }
+                            ]
+
+                        }
+                    ]
+                }).end();
+                break;
+            case "claim.getcauseofdamage-no-custom-yes":
+                console.log("inside: claim.getcauseofdamage-no-custom-yes");
+                res.json({
+                    messages: [
+                        {
+                            platform: "skype",
+                            speech: "I have made a note, Now can you please indicate which all parts of the vehicle were damaged in the accident?",
+                            type: 0
+                        },
+                        {
+                            platform: "skype",
+                            subtitle: "",
+                            title: "Please select and click finish",
+                            type: 1,
+                            buttons: [
+                                {
+                                    postback: "Fire",
+                                    text: "Windshield"
+                                },
+                                {
+                                    postback: "Bumper",
+                                    text: "Bumper"
+                                },
+                                {
+                                    postback: "Front Side",
+                                    text: "Front Side"
+                                },
+                                {
+                                    postback: "Rear",
+                                    text: "Rear"
+                                },
+                                {
+                                    postback: "Hood",
+                                    text: "Hood"
+                                },
+                                {
+                                    postback: "Finish",
+                                    text: "Finish"
                                 }
                             ]
 

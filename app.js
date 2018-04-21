@@ -209,7 +209,7 @@ app.post('/api/messages', (req, res) => {
                 console.log("inside claim.getdamegedparts");
                 if (req.body.result.resolvedQuery == "Finish") {
                 } else {
-                    console.log(+req.body.result.contexts.parameters.partsofvehicle);
+                    console.log(req.body.result.contexts.parameters);
                     /*var verchiclepartslist = "";
                     var verchiclepartsincontext = req.body.result.contexts.parameters.partsofvehicle;
                     var vehicleparts = verchiclepartsincontext.split(',');

@@ -224,8 +224,8 @@ app.post('/api/messages', (req, res) => {
                             {
                                 "name": "vehicle-damagedpart",
                                 "parameters": {
-                                    "partsofvehicle": req.body.result.contexts[0].parameters.parameters.partsofvehicle,
-                                    "partsofvehicle.original": req.body.result.contexts[0].parameters.parameters.partsofvehicle.original,
+                                    "partsofvehicle": req.body.result.contexts[0].parameters.partsofvehicle,
+                                    "partsofvehicle.original": req.body.result.contexts[0].parameters.partsofvehicle.original,
                                     "partsofvehiclelist": verchiclepartslist
                                 },
                                 "lifespan": 5

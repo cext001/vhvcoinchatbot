@@ -103,7 +103,64 @@ app.post('/api/messages', (req, res) => {
                     ]
                 }).end();
                 break;
-            case "claim.getcauseofdamage-no-custom-yes":
+            case "claim.getcauseofdamage":
+                console.log("inside: claim.getcauseofdamage-no-custom-yes");
+                res.json({
+                    messages: [
+                        {
+                            platform: "skype",
+                            speech: "Sorry to hear about the accident!;-( Was anyone injured in the accident?",
+                            type: 0
+                        },
+                        {
+                            platform: "skype",
+                            subtitle: "",
+                            title: "Please select",
+                            type: 1,
+                            buttons: [
+                                {
+                                    postback: "Yes",
+                                    text: "Yes"
+                                },
+                                {
+                                    postback: "No",
+                                    text: "No"
+                                }
+                            ]
+                        }
+                    ]
+                }).end();
+                break
+            case "claimgetcauseofdamage.claimgetcauseofdamage-no":
+                console.log("inside: claimgetcauseofdamage.claimgetcauseofdamage-no");
+                res.json({
+                    messages: [
+                        {
+                            platform: "skype",
+                            speech: "Good to know that!:-) Has the vehicle been damaged in the accident?",
+                            type: 0
+                        },
+                        {
+                            platform: "skype",
+                            subtitle: "",
+                            title: "Please select",
+                            type: 1,
+                            buttons: [
+                                {
+                                    postback: "Yes",
+                                    text: "Yes"
+                                },
+                                {
+                                    postback: "No",
+                                    text: "No"
+                                }
+                            ]
+
+                        }
+                    ]
+                }).end();
+                break;
+                case "claim.getcauseofdamage-no-custom-yes":
                 console.log("inside: claim.getcauseofdamage-no-custom-yes");
                 res.json({
                     messages: [

@@ -205,6 +205,34 @@ app.post('/api/messages', (req, res) => {
                     ]
                 }).end();
                 break;
+            case "claim.getdamegedparts":
+                console.log("inside claim.getdamegedparts");
+                if (req.body.result.resolvedQuery == "Finish") {
+                } else {
+                    var verchiclepartslist = "";
+                    var verchiclepartsincontext = req.body.result.contexts.parameters.parameters.partsofvehicle;
+                    var vehicleparts = verchiclepartsincontext.split(',');
+                    if (!(vehicleparts.indexOf(verchiclepartsincontext) > -1) && vehicleparts.length) {
+                        verchiclepartslist += "," + verchiclepartsincontext;
+                    } else {
+                        verchiclepartslist = verchiclepartsincontext;
+                    }
+                    console.log("vehiclelist " + verchiclepartslist);
+                    res.json({
+                        "contexts": [
+                            {
+                                "name": "vehicle-damagedpart",
+                                "parameters": {
+                                    "partsofvehicle": req.body.result.contexts.parameters.parameters.partsofvehicle,
+                                    "partsofvehicle.original": req.body.result.contexts.parameters.parameters.partsofvehicle.original,
+                                    "partsofvehiclelist": verchiclepartslist
+                                },
+                                "lifespan": 5
+                            }
+                        ]
+                    }).end();
+                }
+                break;
         }
     }
 })

@@ -209,9 +209,9 @@ app.post('/api/messages', (req, res) => {
                 console.log("inside claim.getdamegedparts");
                 if (req.body.result.resolvedQuery == "Finish") {
                 } else {
-                    console.log(+req.body.result.contexts.parameters.parameters.partsofvehicle[0]);
+                    console.log(+req.body.result.contexts.parameters.partsofvehicle);
                     /*var verchiclepartslist = "";
-                    var verchiclepartsincontext = req.body.result.contexts.parameters.parameters.partsofvehicle;
+                    var verchiclepartsincontext = req.body.result.contexts.parameters.partsofvehicle;
                     var vehicleparts = verchiclepartsincontext.split(',');
                     if (!(vehicleparts.indexOf(verchiclepartsincontext) > -1) && vehicleparts.length) {
                         verchiclepartslist += "," + verchiclepartsincontext;

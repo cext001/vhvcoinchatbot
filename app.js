@@ -209,7 +209,7 @@ app.post('/api/messages', (req, res) => {
                 console.log("inside claim.getdamegedparts");
                 if (req.body.result.resolvedQuery == "Finish") {
                 } else {
-                    var verchiclepartslist = "";
+                    /*var verchiclepartslist = "";
                     var verchiclepartsincontext = req.body.result.contexts.parameters.parameters.partsofvehicle;
                     var vehicleparts = verchiclepartsincontext.split(',');
                     if (!(vehicleparts.indexOf(verchiclepartsincontext) > -1) && vehicleparts.length) {
@@ -230,7 +230,7 @@ app.post('/api/messages', (req, res) => {
                                 "lifespan": 5
                             }
                         ]
-                    }).end();
+                    }).end();*/
                 }
                 break;
         }

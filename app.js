@@ -216,9 +216,9 @@ app.post('/api/messages', (req, res) => {
                     var vehicleparts = verchiclepartslist.split(',');
                     console.log(vehicleparts.length);
                     if (vehicleparts.length == 1) {
-                        verchiclepartslist = verchiclepartsincontext;
+                        verchiclepartslist = (verchiclepartslist !== "") ? verchiclepartsincontext + "," + verchiclepartslist : verchiclepartsincontext;
                     } else {
-                        verchiclepartslist = ((vehicleparts.indexOf(verchiclepartsincontext) > -1)) ? verchiclepartslist : verchiclepartslist+"," + verchiclepartsincontext;
+                        verchiclepartslist = ((vehicleparts.indexOf(verchiclepartsincontext) > -1)) ? verchiclepartslist : verchiclepartslist + "," + verchiclepartsincontext;
                     }
                     response = {
                         contextOut: [

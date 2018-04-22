@@ -232,7 +232,7 @@ app.post('/api/messages', (req, res) => {
                         ]
                     };
 
-                    console.log(response);
+                    console.log(JSON.stringify(response));
 
                     res.json(response).end();
                 }

@@ -206,31 +206,35 @@ app.post('/api/messages', (req, res) => {
                 }).end();
                 break;
             case "claim.getdamegedparts":
+                var response = {};
+                var verchiclepartslist = (req.body.result.contexts[0].parameters.partsofvehiclelist) ? req.body.result.contexts[0].parameters.partsofvehiclelist : "";
+                console.log("verchiclepartslist " + verchiclepartslist);
                 console.log("inside claim.getdamegedparts");
                 if (req.body.result.resolvedQuery == "Finish") {
                 } else {
-                    console.log(req.body.result.contexts[0].parameters);
-                    var verchiclepartslist = req.body.result.contexts[0].parameters.partsofvehiclelist;
                     var verchiclepartsincontext = req.body.result.contexts[0].parameters.partsofvehicle;
-                    var vehicleparts = verchiclepartsincontext.split(',');
-                    if (!(vehicleparts.indexOf(verchiclepartsincontext) > -1) && vehicleparts.length) {
-                        verchiclepartslist += "," + verchiclepartsincontext;
-                    } else {
+                    var vehicleparts = verchiclepartslist.split(',');
+                    console.log(vehicleparts.length);
+                    if (vehicleparts.length == 1) {
                         verchiclepartslist = verchiclepartsincontext;
+                    } else {
+                        verchiclepartslist = ((vehicleparts.indexOf(verchiclepartsincontext) > -1)) ? verchiclepartslist : verchiclepartslist+"," + verchiclepartsincontext;
                     }
-                    console.log("vehiclelist " + verchiclepartslist);
-                    res.json({
+                    response = {
                         contextOut: [
                             {
                                 name: "vehicle-damagedpart",
                                 parameters: {
-                                    partsofvehicle: req.body.result.contexts[0].parameters.partsofvehicle,
                                     partsofvehiclelist: verchiclepartslist
                                 },
                                 lifespan: 5
                             }
                         ]
-                    }).end();
+                    };
+
+                    console.log(response);
+
+                    res.json(response).end();
                 }
                 break;
         }

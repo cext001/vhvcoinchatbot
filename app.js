@@ -211,6 +211,16 @@ app.post('/api/messages', (req, res) => {
                 console.log("inside claim.getdamegedparts");
                 console.log(req.body.result.contexts[0]);
                 if (req.body.result.resolvedQuery == "Finish") {
+                    console.log("inside: claimgetcauseofdamage.claimgetcauseofdamage-no");
+                res.json({
+                    messages: [
+                        {
+                            platform: "skype",
+                            speech: "Thanks you have selected"+verchiclepartslist,
+                            type: 0
+                        }
+                    ]
+                }).end();
                 } else {
                     var verchiclepartsincontext = req.body.result.contexts[0].parameters.partsofvehicle;
                     var vehicleparts = verchiclepartslist.split(',');

@@ -208,13 +208,12 @@ app.post('/api/messages', (req, res) => {
             case "claim.getdamegedparts":
                 var response = {};
                 var verchiclepartslist = (req.body.result.contexts[0].parameters.partsofvehiclelist) ? req.body.result.contexts[0].parameters.partsofvehiclelist : "";
-                console.log("verchiclepartslist " + verchiclepartslist);
                 console.log("inside claim.getdamegedparts");
+                console.log(req.body.result.contexts[0]);
                 if (req.body.result.resolvedQuery == "Finish") {
                 } else {
                     var verchiclepartsincontext = req.body.result.contexts[0].parameters.partsofvehicle;
                     var vehicleparts = verchiclepartslist.split(',');
-                    console.log(vehicleparts.length);
                     if (vehicleparts.length == 1) {
                         verchiclepartslist = (verchiclepartslist !== "") ? verchiclepartsincontext + "," + verchiclepartslist : verchiclepartsincontext;
                     } else {

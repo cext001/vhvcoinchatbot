@@ -204,7 +204,7 @@ app.post('/api/messages', (req, res) => {
                     console.log("inside: claim.getdamagedparts Finish");
                     res.json({
                         followupEvent: {
-                            "name": "thirdpartyvehicleststus-event"
+                            name: "thirdpartyvehicleststus-event"
                         }
                     }).end();
                 } else {

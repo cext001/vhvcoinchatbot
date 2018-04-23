@@ -12,6 +12,7 @@ const REST_PORT = process.env.PORT || 8080;
 app.post('/api/messages', (req, res) => {
     console.log('Dialogflow Request body: ' + JSON.stringify(req.body));
     if (req.body.result) {
+        console.log("Action: " + req.body.result.action + ", Intent: " + req.body.result.metadata.intentName);
         switch (req.body.result.action) {
             case "claim.getdateandtime":
                 console.log("inside: claim.getdateandtime");
@@ -185,7 +186,7 @@ app.post('/api/messages', (req, res) => {
                                     text: "Hood"
                                 },
                                 {
-                                    postback: "finish",
+                                    postback: "Finish",
                                     text: "Finish"
                                 }
                             ]
@@ -199,14 +200,14 @@ app.post('/api/messages', (req, res) => {
                 var verchiclepartsincontext = req.body.result.contexts[0].parameters.partsofvehicle;
                 var verchiclepartslist = (req.body.result.contexts[0].parameters.partsofvehiclelist) ? req.body.result.contexts[0].parameters.partsofvehiclelist : "";
                 console.log("inside claim.getdamagedparts");
-                console.log(req.body.result.contexts[0]);
+                console.log("resolvedQuery:" + req.body.result.resolvedQuery);
                 if (req.body.result.resolvedQuery == "Finish") {
                     console.log("inside: claim.getdamagedparts Finish");
                     res.json({
                         followupEvent: {
                             name: "thirdpartyvehicleststus-event"
                         }
-                    }).end(); 
+                    }).end();
                 } else {
                     var messsage = verchiclepartsincontext + " has been added.";
                     var vehicleparts = verchiclepartslist.split(',');

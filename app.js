@@ -203,12 +203,10 @@ app.post('/api/messages', (req, res) => {
                 if (req.body.result.resolvedQuery == "Finish") {
                     console.log("inside: claim.getdamagedparts Finish");
                     res.json({
-                        events: [
-                            {
-                                name: "thirdpartyvehicleststus-event"
-                            }
-                        ]
-                    }).end();
+                        followupEvent: {
+                            name: "thirdpartyvehicleststus-event"
+                        }
+                    }).end(); 
                 } else {
 
                     var messsage = verchiclepartsincontext + " has been added.";

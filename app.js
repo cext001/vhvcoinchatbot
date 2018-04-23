@@ -196,6 +196,7 @@ app.post('/api/messages', (req, res) => {
                 break;
             case "claim.getdamagedparts":
                 var response = {};
+                var verchiclepartsincontext = req.body.result.contexts[0].parameters.partsofvehicle;
                 var verchiclepartslist = (req.body.result.contexts[0].parameters.partsofvehiclelist) ? req.body.result.contexts[0].parameters.partsofvehiclelist : "";
                 console.log("inside claim.getdamagedparts");
                 console.log(req.body.result.contexts[0]);
@@ -211,17 +212,34 @@ app.post('/api/messages', (req, res) => {
                         ]
                     }).end();
                 } else {
-                    var verchiclepartsincontext = req.body.result.contexts[0].parameters.partsofvehicle;
+
+                    var messsage = verchiclepartsincontext + " has been added.";
                     var vehicleparts = verchiclepartslist.split(',');
+                    console.log("Array length:" + vehicleparts.length);
                     if (vehicleparts.length == 1) {
-                        console.log("here");
-                        verchiclepartslist = (verchiclepartslist !== "") ? verchiclepartslist + ", " + verchiclepartsincontext : verchiclepartsincontext;
+                        if (vehicleparts[0] == verchiclepartsincontext) {
+                            verchiclepartslist = verchiclepartslist;
+                        } else if (vehicleparts[0] == "") {
+                            verchiclepartslist = verchiclepartsincontext;
+                        } else {
+                            verchiclepartslist = verchiclepartslist + ", " + verchiclepartsincontext;
+                        }
                     } else {
-                        console.log(vehicleparts);
-                        console.log("exists" + vehicleparts.indexOf(verchiclepartsincontext));
-                        verchiclepartslist = ((vehicleparts.indexOf(verchiclepartsincontext) > -1)) ? verchiclepartslist : verchiclepartslist + "," + verchiclepartsincontext;
+                        if (!(vehicleparts.indexOf(verchiclepartsincontext) > -1)) {
+                            verchiclepartslist + "," + verchiclepartsincontext
+                        } else {
+                            messsage = verchiclepartsincontext + " is already added.";
+                        }
                     }
+
                     response = {
+                        messages: [
+                            {
+                                platform: "skype",
+                                speech: messsage,
+                                type: 0
+                            }
+                        ],
                         contextOut: [
                             {
                                 name: "vehicle-damagedpart",

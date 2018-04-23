@@ -202,15 +202,61 @@ app.post('/api/messages', (req, res) => {
                 if (req.body.result.resolvedQuery == "Finish") {
                     console.log("inside: claim.getdamagedparts Finish");
                     res.json({
-                        speech: "You have selected " + verchiclepartslist,
-                        displayText: "You have selected " + verchiclepartslist,
-                        type: 0
+                        messages: [
+                            {
+                                platform: "skype",
+                                speech: "You have selected " + verchiclepartslist,
+                                type: 0
+                            },
+                            {
+                                platform: "skype",
+                                subtitle: "",
+                                title: "Please select and click finish",
+                                type: 1,
+                                buttons: [
+                                    {
+                                        postback: "Fire",
+                                        text: "Windshield"
+                                    },
+                                    {
+                                        postback: "Bumper",
+                                        text: "Bumper"
+                                    },
+                                    {
+                                        postback: "Front Side",
+                                        text: "Front Side"
+                                    },
+                                    {
+                                        postback: "Rear",
+                                        text: "Rear"
+                                    },
+                                    {
+                                        postback: "Hood",
+                                        text: "Hood"
+                                    },
+                                    {
+                                        postback: "Finish",
+                                        text: "Finish"
+                                    }
+                                ]
+
+                            }
+                        ],
+                        contextOut: [
+                            {
+                                name: "tpvehicle-damagedpart",
+                                parameters: {
+                                    partsoftpvehiclelist: ""
+                                },
+                                lifespan: 5
+                            }
+                        ]
                     }).end();
                 } else {
                     var verchiclepartsincontext = req.body.result.contexts[0].parameters.partsofvehicle;
                     var vehicleparts = verchiclepartslist.split(',');
                     if (vehicleparts.length == 1) {
-                        console.log(verchiclepartslist);
+                        console.log("here");
                         verchiclepartslist = (verchiclepartslist !== "") ? verchiclepartslist + ", " + verchiclepartsincontext : verchiclepartsincontext;
                     } else {
                         console.log(vehicleparts);

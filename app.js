@@ -208,8 +208,6 @@ app.post('/api/messages', (req, res) => {
                     }).end();*/
                     res.json({
                         speech: "You have selected " + verchiclepartslist,
-                        displayText: "You have selected " + verchiclepartslist,
-                        type: 0,
                         followupEvent: {
                             name: "thirdpartydamagedpart-event"
                         }

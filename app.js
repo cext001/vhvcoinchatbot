@@ -200,11 +200,16 @@ app.post('/api/messages', (req, res) => {
                 console.log("inside claim.getdamagedparts");
                 console.log(req.body.result.contexts[0]);
                 if (req.body.result.resolvedQuery == "Finish") {
-                    console.log("inside: claim.getdamagedparts Finish");                    
-                    res.json({
+                    console.log("inside: claim.getdamagedparts Finish");
+                    /*res.json({
                         speech: "You have selected " + verchiclepartslist,
                         displayText: "You have selected " + verchiclepartslist,
                         type: 0
+                    }).end();*/
+                    res.json({
+                        followupEvent: {
+                            name: "thirdpartydamagedpart-event"
+                        }
                     }).end();
                 } else {
                     var verchiclepartsincontext = req.body.result.contexts[0].parameters.partsofvehicle;

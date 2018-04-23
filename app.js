@@ -194,13 +194,13 @@ app.post('/api/messages', (req, res) => {
                     ]
                 }).end();
                 break;
-            case "claimgetcauseofdamage.claimgetcauseofdamage-no.claimgetcauseofdamage-no-yes.claimgetcauseofdamage-no-yes-getdamagedparts":
+            case "claim.getdamagedparts":
                 var response = {};
                 var verchiclepartslist = (req.body.result.contexts[0].parameters.partsofvehiclelist) ? req.body.result.contexts[0].parameters.partsofvehiclelist : "";
-                console.log("inside claimgetcauseofdamage.claimgetcauseofdamage-no.claimgetcauseofdamage-no-yes.claimgetcauseofdamage-no-yes-getdamagedparts");
+                console.log("inside claim.getdamagedparts");
                 console.log(req.body.result.contexts[0]);
                 if (req.body.result.resolvedQuery == "Finish") {
-                    console.log("inside: claimgetcauseofdamage.claimgetcauseofdamage-no.claimgetcauseofdamage-no-yes.claimgetcauseofdamage-no-yes-getdamagedparts Finish");                    
+                    console.log("inside: claim.getdamagedparts Finish");                    
                     res.json({
                         speech: "You have selected " + verchiclepartslist,
                         displayText: "You have selected " + verchiclepartslist,

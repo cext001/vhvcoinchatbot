@@ -202,16 +202,19 @@ app.post('/api/messages', (req, res) => {
                 if (req.body.result.resolvedQuery == "Finish") {
                     console.log("inside: claim.getdamagedparts Finish");
                     res.json({
-                        speech: "You have selected " + verchiclepartslist,
-                        displayText: "You have selected " + verchiclepartslist,
-                        type: 0
+                        followupEvent: {
+                            name: "thirdpartydamagedparts-event "
+                        }
                     }).end();
                 } else {
                     var verchiclepartsincontext = req.body.result.contexts[0].parameters.partsofvehicle;
                     var vehicleparts = verchiclepartslist.split(',');
                     if (vehicleparts.length == 1) {
+                        console.log(verchiclepartslist);
                         verchiclepartslist = (verchiclepartslist !== "") ? verchiclepartslist + ", " + verchiclepartsincontext : verchiclepartsincontext;
                     } else {
+                        console.log(vehicleparts);
+                        console.log("exists" + vehicleparts.indexOf(verchiclepartsincontext));
                         verchiclepartslist = ((vehicleparts.indexOf(verchiclepartsincontext) > -1)) ? verchiclepartslist : verchiclepartslist + "," + verchiclepartsincontext;
                     }
                     response = {

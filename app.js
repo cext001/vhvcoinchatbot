@@ -201,16 +201,10 @@ app.post('/api/messages', (req, res) => {
                 console.log(req.body.result.contexts[0]);
                 if (req.body.result.resolvedQuery == "Finish") {
                     console.log("inside: claim.getdamagedparts Finish");
-                    /*res.json({
+                    res.json({
                         speech: "You have selected " + verchiclepartslist,
                         displayText: "You have selected " + verchiclepartslist,
                         type: 0
-                    }).end();*/
-                    res.json({
-                        speech: "You have selected " + verchiclepartslist,
-                        followupEvent: {
-                            name: "thirdpartydamagedpart-event"
-                        }
                     }).end();
                 } else {
                     var verchiclepartsincontext = req.body.result.contexts[0].parameters.partsofvehicle;
@@ -231,13 +225,15 @@ app.post('/api/messages', (req, res) => {
                             }
                         ]
                     };
-
                     console.log(JSON.stringify(response));
-
                     res.json(response).end();
                 }
                 break;
+            case "claimgetdamagedparts.claimgetdamagedparts-getthirdpartydamagedparts":
+                console.log("Hi in followup");
+                break;
         }
+
     }
 })
 

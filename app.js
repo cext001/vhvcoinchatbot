@@ -186,7 +186,7 @@ app.post('/api/messages', (req, res) => {
                                     text: "Hood"
                                 },
                                 {
-                                    postback: "Finish",
+                                    postback: "ok finish it",
                                     text: "Finish"
                                 }
                             ]
@@ -201,7 +201,7 @@ app.post('/api/messages', (req, res) => {
                 var verchiclepartslist = (req.body.result.contexts[0].parameters.partsofvehiclelist) ? req.body.result.contexts[0].parameters.partsofvehiclelist : "";
                 console.log("inside claim.getdamagedparts");
                 console.log("resolvedQuery:" + req.body.result.resolvedQuery);
-                if (req.body.result.resolvedQuery == "Finish" || req.body.result.resolvedQuery == "finish") {
+                if (req.body.result.resolvedQuery == "ok finish it") {
                     console.log("inside: claim.getdamagedparts Finish");
                     res.json({
                         followupEvent: {

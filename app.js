@@ -202,15 +202,9 @@ app.post('/api/messages', (req, res) => {
                 if (req.body.result.resolvedQuery == "Finish") {
                     console.log("inside: claim.getdamagedparts Finish");
                     res.json({
-                        messages: [
-                            {
-                                platform: "skype",
-                                speech: "You have selected " + verchiclepartslist,
-                                type: 0
-                            }],
-                        followupEvent: {
-                            name: "thirdpartydamagedparts-event "
-                        }
+                        speech: "You have selected " + verchiclepartslist,
+                        displayText: "You have selected " + verchiclepartslist,
+                        type: 0
                     }).end();
                 } else {
                     var verchiclepartsincontext = req.body.result.contexts[0].parameters.partsofvehicle;

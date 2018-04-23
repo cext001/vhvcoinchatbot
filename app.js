@@ -185,7 +185,7 @@ app.post('/api/messages', (req, res) => {
                                     text: "Hood"
                                 },
                                 {
-                                    postback: "Finish",
+                                    postback: "finish",
                                     text: "Finish"
                                 }
                             ]
@@ -208,7 +208,6 @@ app.post('/api/messages', (req, res) => {
                         }
                     }).end(); 
                 } else {
-
                     var messsage = verchiclepartsincontext + " has been added.";
                     var vehicleparts = verchiclepartslist.split(',');
                     console.log("Array length:" + vehicleparts.length);

@@ -166,27 +166,66 @@ app.post('/api/messages', (req, res) => {
                             imageUrl: "https://sparesboyz.com/wp-content/uploads/2017/07/Auto-Body-Parts.png",
                             buttons: [
                                 {
+                                    postback: "Exposed Bumper (Front/Rear)",
+                                    text: "Exposed Bumper (Front/Rear)"
+                                },
+                                {
+                                    postback: "Unexposed Bumper (Front/Rear)",
+                                    text: "Unexposed Bumper (Front/Rear)"
+                                },
+                                {
+                                    postback: "Fascia",
+                                    text: "Fascia"
+                                },
+                                {
+                                    postback: "Grille",
+                                    text: "Grille"
+                                },
+                                {
+                                    postback: "Quarter Panel",
+                                    text: "Quarter Panel"
+                                },
+                                {
+                                    postback: "Pillars and Hard trim",
+                                    text: "Pillars and Hard trim"
+                                },
+                                {
+                                    postback: "Bonnet",
+                                    text: "Bonnet"
+                                },
+                                {
+                                    postback: "Roof Rack",
+                                    text: "Roof Rack"
+                                },
+                                {
+                                    postback: "Spoiler (Front/Rear)",
+                                    text: "Spoiler (Front/Rear)"
+                                },
+                                {
+                                    postback: "Front Door (Left/Right)",
+                                    text: "Front Door (Left/Right)"
+                                },
+                                {
+                                    postback: "Rear Door (Left/Right)",
+                                    text: "Rear Door (Left/Right)"
+                                },
+                                {
+                                    postback: "Door Handles (Front/Right)",
+                                    text: "Door Handles (Front/Right)"
+                                },
+                                {
+                                    postback: "Glass",
+                                    text: "Glass"
+                                },
+                                {
+                                    postback: "Sunroof",
+                                    text: "Sunroof"
+                                },
+                                {
                                     postback: "Windshield",
                                     text: "Windshield"
-                                },
-                                {
-                                    postback: "Bumper",
-                                    text: "Bumper"
-                                },
-                                {
-                                    postback: "Front Side",
-                                    text: "Front Side"
-                                },
-                                {
-                                    postback: "Rear",
-                                    text: "Rear"
-                                },
-                                {
-                                    postback: "Hood",
-                                    text: "Hood"
                                 }
                             ]
-
                         }
                     ]
                 }).end();

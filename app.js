@@ -338,6 +338,7 @@ app.post('/api/messages', (req, res) => {
                             }]
                     };
                 }
+                console.log(out);
                 res.json(out).end();
                 break;
         }

@@ -185,10 +185,6 @@ app.post('/api/messages', (req, res) => {
                                 {
                                     postback: "Hood",
                                     text: "Hood"
-                                },
-                                {
-                                    postback: "close it",
-                                    text: "close it"
                                 }
                             ]
 

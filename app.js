@@ -155,6 +155,11 @@ app.post('/api/messages', (req, res) => {
                 res.json({
                     messages: [
                         {
+                            "type": 3,
+                            "platform": "skype",
+                            "imageUrl": "http://kenrobertsautoglass.com/wp-content/uploads/2013/11/Replacement-Aftermarket-Car-Body-Parts.jpg"
+                        },
+                        {
                             platform: "skype",
                             speech: "I have made a note, Now can you please indicate which all parts of the vehicle were damaged in the accident?",
                             type: 0
@@ -162,9 +167,8 @@ app.post('/api/messages', (req, res) => {
                         {
                             platform: "skype",
                             subtitle: "",
-                            title: "Please select and click finish",
+                            title: "Please select",
                             type: 1,
-                            image_url: "http://kenrobertsautoglass.com/wp-content/uploads/2013/11/Replacement-Aftermarket-Car-Body-Parts.jpg",
                             buttons: [
                                 {
                                     postback: "Windshield",

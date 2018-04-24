@@ -164,7 +164,7 @@ app.post('/api/messages', (req, res) => {
                             subtitle: "",
                             title: "Please select",
                             type: 1,
-                            imageUrl: "http://kenrobertsautoglass.com/wp-content/uploads/2013/11/Replacement-Aftermarket-Car-Body-Parts.jpg",
+                            imageUrl: "https://sparesboyz.com/wp-content/uploads/2017/07/Auto-Body-Parts.png",
                             buttons: [
                                 {
                                     postback: "Windshield",

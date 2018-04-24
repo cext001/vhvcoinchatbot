@@ -294,7 +294,7 @@ app.post('/api/messages', (req, res) => {
                         console.log(result);
                         if (result.length) {
                             console.log("valid policuy num");
-                            out = {
+                            res.json({
                                 messages: [
                                     {
                                         platform: "skype",
@@ -305,41 +305,39 @@ app.post('/api/messages', (req, res) => {
                                         speech: "Please can I have your Date of Incident and time of incident.",
                                         type: 0
                                     }]
-                            };
+                            }).end();
                         } else {
                             console.log("invalid policuy num");
-                            out = {
+                            res.json({
                                 messages: [
                                     {
                                         platform: "skype",
                                         speech: "Please provide a valid policy number!.",
                                         type: 0
                                     }]
-                            };
+                            });
                         }
                     }).catch((err) => {
                         console.log(err);
-                        out = {
+                        res.json({
                             messages: [
                                 {
                                     platform: "skype",
                                     speech: "Something went wrong!.",
                                     type: 0
                                 }]
-                        };
+                        }).end();
                     })
                 } else {
-                    out = {
+                    res.json({
                         messages: [
                             {
                                 platform: "skype",
                                 speech: "Please provide a valid policy number.",
                                 type: 0
                             }]
-                    };
+                    }).end();
                 }
-                console.log(out);
-                res.json(out).end();
                 break;
         }
 

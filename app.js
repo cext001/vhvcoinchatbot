@@ -12,6 +12,7 @@ const REST_PORT = process.env.PORT || 8080;
 app.post('/api/messages', (req, res) => {
     console.log('Dialogflow Request body: ' + JSON.stringify(req.body));
     if (req.body.result) {
+        console.log("Action: " + req.body.result.action + ", Intent: " + req.body.result.metadata.intentName);
         switch (req.body.result.action) {
             case "claim.getdateandtime":
                 console.log("inside: claim.getdateandtime");
@@ -186,8 +187,8 @@ app.post('/api/messages', (req, res) => {
                                     text: "Hood"
                                 },
                                 {
-                                    postback: "finish",
-                                    text: "Finish"
+                                    postback: "close it",
+                                    text: "close it"
                                 }
                             ]
 

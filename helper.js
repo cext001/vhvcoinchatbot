@@ -6,33 +6,27 @@ module.exports = {
             console.log('getClaimPaymentDetails');
             var options = {
                 method: 'POST',
-                //http://35.154.116.87:8080/cc/service/edge/fnol/policy
-                url: 'http://35.154.116.87:8080/cc/service/edge/fnol/policy',
+                url: 'http://35.154.116.87:8080/cc/service/edge/hexaware/common',
                 headers:
                     {
-                        'postman-token': '710e2e70-5c0d-fe94-62e9-4224db00e69f',
+                        'postman-token': '08b5f2c7-dc7d-7190-d81f-1294d29a4da5',
                         'cache-control': 'no-cache',
                         'content-type': 'application/json',
                         authorization: 'Basic c3U6Z3c='
                     },
-                body:
-                    {
-                        jsonrpc: '2.0',
-                        method: 'searchPolicies',
-                        params: [{ policyNumber: '54-123456' }]
-                    },
+                body: { jsonrpc: '2.0', method: 'getPolicyTypes', params: [] },
                 json: true
-            };
+            }
             console.log(JSON.stringify(options));
             request(JSON.parse(JSON.stringify(options)), function (error, response, body) {
                 if (error) {
-                    console.log('error',error);
-                    console.log('response',response);
+                    console.log('error', error);
+                    console.log('response', response);
                     reject(error);
-                }else{
+                } else {
                     console.log(body);
                     resolve(body);
-                }                
+                }
             });
         });
     },

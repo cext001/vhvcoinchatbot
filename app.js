@@ -98,7 +98,7 @@ app.post('/api/messages', (req, res) => {
                     messages: [
                         {
                             platform: "skype",
-                            speech: "Sorry to hear about the accident!;-( Was anyone injured in the accident?",
+                            speech: "Sorry to hear about the accident! ;-( Was anyone injured in the accident?",
                             type: 0
                         },
                         {
@@ -126,7 +126,7 @@ app.post('/api/messages', (req, res) => {
                     messages: [
                         {
                             platform: "skype",
-                            speech: "Good to know that!:-) Has the vehicle been damaged in the accident?",
+                            speech: "Good to know that! :-) Has the vehicle been damaged in the accident?",
                             type: 0
                         },
                         {
@@ -163,6 +163,7 @@ app.post('/api/messages', (req, res) => {
                             subtitle: "",
                             title: "Please select and click finish",
                             type: 1,
+                            image_url: "http://kenrobertsautoglass.com/wp-content/uploads/2013/11/Replacement-Aftermarket-Car-Body-Parts.jpg",
                             buttons: [
                                 {
                                     postback: "Windshield",
@@ -195,59 +196,53 @@ app.post('/api/messages', (req, res) => {
                 }).end();
                 break;
             case "claim.getdamagedparts":
-                var response = {};
+                /*var response = {};
                 var verchiclepartsincontext = req.body.result.contexts[0].parameters.partsofvehicle;
                 var verchiclepartslist = (req.body.result.contexts[0].parameters.partsofvehiclelist) ? req.body.result.contexts[0].parameters.partsofvehiclelist : "";
                 console.log("inside claim.getdamagedparts");
                 console.log(req.body.result.contexts[0]);
-                if (req.body.result.resolvedQuery == "Finish") {
-                    console.log("inside: claim.getdamagedparts Finish");
-                    res.json({
-                        followupEvent: {
-                            name: "thirdpartyvehicleststus-event"
-                        }
-                    }).end(); 
-                } else {
-                    var messsage = verchiclepartsincontext + " has been added.";
-                    var vehicleparts = verchiclepartslist.split(',');
-                    console.log("Array length:" + vehicleparts.length);
-                    if (vehicleparts.length == 1) {
-                        if (vehicleparts[0] == verchiclepartsincontext) {
-                            verchiclepartslist = verchiclepartslist;
-                        } else if (vehicleparts[0] == "") {
-                            verchiclepartslist = verchiclepartsincontext;
-                        } else {
-                            verchiclepartslist = verchiclepartslist + ", " + verchiclepartsincontext;
-                        }
-                    } else {
-                        if (!(vehicleparts.indexOf(verchiclepartsincontext) > -1)) {
-                            verchiclepartslist + "," + verchiclepartsincontext
-                        } else {
-                            messsage = verchiclepartsincontext + " is already added.";
-                        }
-                    }
 
-                    response = {
-                        messages: [
-                            {
-                                platform: "skype",
-                                speech: messsage,
-                                type: 0
-                            }
-                        ],
-                        contextOut: [
-                            {
-                                name: "vehicle-damagedpart",
-                                parameters: {
-                                    partsofvehiclelist: verchiclepartslist
-                                },
-                                lifespan: 5
-                            }
-                        ]
-                    };
-                    console.log(JSON.stringify(response));
-                    res.json(response).end();
+
+                var messsage = verchiclepartsincontext + " has been added.";
+                var vehicleparts = verchiclepartslist.split(',');
+                console.log("Array length:" + vehicleparts.length);
+                if (vehicleparts.length == 1) {
+                    if (vehicleparts[0] == verchiclepartsincontext) {
+                        verchiclepartslist = verchiclepartslist;
+                    } else if (vehicleparts[0] == "") {
+                        verchiclepartslist = verchiclepartsincontext;
+                    } else {
+                        verchiclepartslist = verchiclepartslist + ", " + verchiclepartsincontext;
+                    }
+                } else {
+                    if (!(vehicleparts.indexOf(verchiclepartsincontext) > -1)) {
+                        verchiclepartslist + "," + verchiclepartsincontext
+                    } else {
+                        messsage = verchiclepartsincontext + " is already added.";
+                    }
                 }
+
+                response = {
+                    messages: [
+                        {
+                            platform: "skype",
+                            speech: messsage,
+                            type: 0
+                        }
+                    ],
+                    contextOut: [
+                        {
+                            name: "vehicle-damagedpart",
+                            parameters: {
+                                partsofvehiclelist: verchiclepartslist
+                            },
+                            lifespan: 5
+                        }
+                    ]
+                };
+                console.log(JSON.stringify(response));
+                res.json(response).end();*/
+                console.log("insider damaged parts");
                 break;
             case "claimgetdamagedparts.claimgetdamagedparts-getthirdpartydamagedparts":
                 console.log("Hi in followup");

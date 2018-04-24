@@ -1,7 +1,8 @@
 const helper = require('./helper');
 
-var self = {
+module.exports = {
     handlePolicyNumber: function (req, res) {
+        console.log("Ssssssss");
         var out = {};
         var policyNumber = req.body.result.parameters.PolicyNumber + "";
         console.log("policyNumber:" + policyNumber);
@@ -59,5 +60,3 @@ var self = {
         res.json(out).end();
     }
 }
-
-module.exports = self;

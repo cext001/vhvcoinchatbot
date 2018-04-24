@@ -281,6 +281,7 @@ app.post('/api/messages', (req, res) => {
                 console.log("insider damaged parts");
                 break;
             case "claim.getpolicynumber":
+                console.log("insider claim.getpolicynumber");
                 controller.handlePolicyNumber;
                 break;
         }

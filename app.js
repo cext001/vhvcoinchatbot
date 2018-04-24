@@ -288,7 +288,7 @@ app.post('/api/messages', (req, res) => {
                 var policyNumber = req.body.result.parameters.PolicyNumber + "";
                 console.log("policyNumber:" + policyNumber);
                 if (policyNumber.length == 8) {
-                    policyNumber = (tt.replace(/(\d{2})(\d{6})/, "$1-$2"));
+                    policyNumber = (policyNumber.replace(/(\d{2})(\d{6})/, "$1-$2"));
                     console.log("valid policy number " + policyNumber);
                     return helper.searchPolicies(policyNumber).then((result) => {
                         console.log(result);

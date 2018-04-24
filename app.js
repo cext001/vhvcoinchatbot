@@ -2,6 +2,7 @@
 const express = require('express')
 const bodyParser = require('body-parser');
 const helper = require('./helper');
+const controller = require('./controller');
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
@@ -279,8 +280,8 @@ app.post('/api/messages', (req, res) => {
                 res.json(response).end();*/
                 console.log("insider damaged parts");
                 break;
-            case "claimgetdamagedparts.claimgetdamagedparts-getthirdpartydamagedparts":
-                console.log("Hi in followup");
+            case "claim.getpolicynumber":
+                controller.handlePolicyNumber;
                 break;
         }
 

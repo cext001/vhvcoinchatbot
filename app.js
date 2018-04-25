@@ -294,8 +294,10 @@ app.post('/api/messages', (req, res) => {
                         console.log(result);
                         if (result.length) {
                             console.log("valid policuy num");
-                            var date = new Date(result.effectiveDate);
+                            var date = new Date(result[0].effectiveDate);
+                            var policyType = result[0].policyType;
                             date = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+                            console.log("Date:" + date + " Policytype" + policyType);
                             res.json({
                                 messages: [
                                     {
@@ -312,7 +314,7 @@ app.post('/api/messages', (req, res) => {
                                         name: "policy-info",
                                         parameters: {
                                             effectiveDate: date,
-                                            policyType: result.policyType,
+                                            policyType: policyType,
                                         },
                                         lifespan: 5
                                     }

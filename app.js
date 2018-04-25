@@ -17,7 +17,7 @@ app.post('/api/messages', (req, res) => {
             case "claim.getdateandtime":
                 console.log("inside: claim.getdateandtime");
                 console.log('context', req.body.result.contexts[0]);
-                console.log("IncidentDate: " + req.body.result.parameters.IncidentDate + ", Incident Time: " + req.body.result.parameters.IncidentTime);
+                console.log("Policy effective date: " + req.body.result.contexts[0].parameters.effectiveDate + ", IncidentDate: " + req.body.result.parameters.IncidentDate + ", Incident Time: " + req.body.result.parameters.IncidentTime);
                 if (req.body.result.parameters.IncidentDate != req.body.result.contexts[0].parameters.effectiveDate) {
                     console.log("date not matches with policy date");
                     res.json({

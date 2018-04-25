@@ -351,8 +351,8 @@ app.post('/api/messages', (req, res) => {
             case "claim.getthirdpaartyassistanceinfo":
                 console.log("inside claim.getthirdpaartyassistanceinfo");
                 console.log('context', JSON.stringify(req.body.result.contexts));
-                var tempClaimInfo = req.body.result.contexts[1].parameters.tempclaiminfo;
-                var policyInfo = req.body.result.contexts[2].parameters.searchpolicyinfo[0];
+                var tempClaimInfo = req.body.result.contexts[0].parameters.tempclaiminfo;
+                var policyInfo = req.body.result.contexts[1].parameters.searchpolicyinfo[0];
                 return helper.submitClaim(tempClaimInfo, policyInfo).then((result) => {
                     res.json({
                         messages: [

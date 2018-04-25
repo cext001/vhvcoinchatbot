@@ -5,7 +5,7 @@ var lodash = require('lodash');
 module.exports = {
     "getPolicyTypes": function () {
         return new Promise(function (resolve, reject) {
-            console.log('getClaimPaymentDetails');
+            console.log('getPolicyTypes');
             var options = {
                 method: 'POST',
                 url: config.base_url + 'cc/service/edge/hexaware/common',
@@ -98,7 +98,7 @@ module.exports = {
             });
         });
     },
-    "createTempClaim": function (policyNumber) {
+    "createTempClaim": function (policyNumber, lossdate, losscause) {
         return new Promise(function (resolve, reject) {
             console.log('getLossType');
             var options = {
@@ -111,10 +111,10 @@ module.exports = {
                         authorization: 'Basic c3U6Z3c='
                     },
                 body: {
-                    jsonrpc: "2.0", method: "createTempClaim", params: [{
+                    jsonrpc: "2.0", method: "createTempClaim", params: [policyNumber, {
                         LossType: "AUTO",
-                        LossDate: "2018-04-17T18:30:00Z",
-                        LossCause: "vehcollision"
+                        LossDate: lossdate,
+                        LossCause: losscause
                     }]
                 },
                 json: true
@@ -122,19 +122,12 @@ module.exports = {
             console.log(JSON.stringify(options));
             request(JSON.parse(JSON.stringify(options)), function (error, response, body) {
                 if (error) {
-                    console.log('error', error);
+                    console.log('create temp claim error', error);
                     console.log('response', response);
                     reject(error);
                 } else {
-                    var lossTypes = [];
-                    lodash.forEach(body.result, function (value, key) {
-                        lossTypes.push({
-                            postback: value.code,
-                            text: value.name
-                        });
-                    });
-                    console.log('fro  helper losstypes', lossTypes);
-                    resolve(lossTypes);
+                    console.log('create temp claim body', body);
+                    resolve(body.result);
                 }
             });
         });

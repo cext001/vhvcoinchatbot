@@ -88,8 +88,26 @@ app.post('/api/messages', (req, res) => {
                 break;
             case "claim.getcauseofdamage":
                 console.log("inside: claim.getcauseofdamage-no-custom-yes");
+                console.log('context', req.body.result.contexts[0]);
+                var message = "";
+                var policyNumber = req.body.result.contexts[0].parameters.PolicyNumber;
+                var lossdate = req.body.result.contexts[0].parameters.IncidentDate;
+                var losscause = req.body.result.contexts[0].parameters.causeofdamage;
+                return helper.createTempClaim(policyNumber, lossdate, losscause).then((result) => {
+                    console.log('create temp claim result', result);
+                    var claimNumber = result.result.claimNumber;
+                    message = "A temporary claim has been created on your behalf. Please note the claim number for future reference:" + claimNumber;
+                }).catch((err) => {
+                    console.log('create temp claim error', err);
+                    message = "Something went wrong while creating temporary claim.";
+                })
                 res.json({
                     messages: [
+                        {
+                            platform: "skype",
+                            speech: message,
+                            type: 0
+                        },
                         {
                             platform: "skype",
                             speech: "Sorry to hear about the accident! ;-( Was anyone injured in the accident?",
@@ -308,7 +326,7 @@ app.post('/api/messages', (req, res) => {
                                         parameters: {
                                             effectiveDate: date,
                                             policyType: policyType,
-                                            PolicyNumber:policyNumber
+                                            PolicyNumber: policyNumber
                                         },
                                         lifespan: 5
                                     }

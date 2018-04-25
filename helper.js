@@ -111,10 +111,11 @@ module.exports = {
                         authorization: 'Basic c3U6Z3c='
                     },
                 body: {
-                    jsonrpc: "2.0", method: "createTempClaim", params: [policyNumber, {
+                    jsonrpc: "2.0", method: "createClaim", params: [policyNumber, {
                         LossType: "AUTO",
                         LossDate: lossdate,
-                        LossCause: losscause
+                        LossCause: losscause,
+                        description: "testNewClaim"
                     }]
                 },
                 json: true

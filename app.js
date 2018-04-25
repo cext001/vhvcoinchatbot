@@ -105,7 +105,6 @@ app.post('/api/messages', (req, res) => {
                             },
                             {
                                 platform: "skype",
-                                subtitle: "",
                                 title: "Please select",
                                 type: 1,
                                 buttons: [

@@ -313,7 +313,7 @@ app.post('/api/messages', (req, res) => {
                     messages: [
                         {
                             platform: "skype",
-                            speech: "Good to know that! :-) Has the vehicle been damaged in the accident?",
+                            speech: "Do you need any third party assitance",
                             type: 0
                         },
                         {
@@ -341,7 +341,7 @@ app.post('/api/messages', (req, res) => {
                 break;
             case "claim.getthirdpaartyassistanceinfo":
                 console.log("inside claim.getthirdpaartyassistanceinfo");
-                
+
                 break;
         }
     }

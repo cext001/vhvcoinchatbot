@@ -162,7 +162,7 @@ module.exports = {
     },
     "getVehicleParts": function () {
         return new Promise(function (resolve, reject) {
-            console.log('getPolicyTypes');
+            console.log('getVehicleParts');
             var options = {
                 method: 'POST',
                 url: config.base_url + 'cc/service/edge/hexaware/common',

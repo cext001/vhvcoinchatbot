@@ -16,17 +16,22 @@ app.post('/api/messages', (req, res) => {
         switch (req.body.result.action) {
             case "claim.getdateandtime":
                 console.log("inside: claim.getdateandtime");
-                if (req.body.result.actionIncomplete) {
+                console.log('context', req.body.result.contexts[0]);
+                console.log("IncidentDate: " + req.body.result.parameters.IncidentDate + ", Incident Time: " + req.body.result.parameters.IncidentTime);
+                if (req.body.result.parameters.IncidentDate != req.body.result.contexts[0].parameters.IncidentDate) {
+                    console.log("date not matches with policy date");
                     res.json({
                         messages: [
                             {
                                 platform: "skype",
-                                speech: "Please provide date and time",
+                                speech: "Invalid date provided.",
                                 type: 0
-                            }]
+                            },
+                        ],
+                        actionIncomplete: true
                     }).end();
                 } else {
-                    console.log('context', req.body.result.contexts[0]);
+                    console.log("date matches with policy date");
                     res.json({
                         messages: [
                             {
@@ -63,7 +68,6 @@ app.post('/api/messages', (req, res) => {
                         ]
                     }).end();
                 }
-
                 break;
             case "claim.getclaimtype":
                 console.log("inside: claim.getclaimtype");

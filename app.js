@@ -275,7 +275,7 @@ app.post('/api/messages', (req, res) => {
                 }
                 break;
             case "claimgetdamagedparts.claimgetdamagedparts-yes":
-                console.log("inside claimgetdamagedparts.claimgetdamagedparts-yes");
+                console.log("inside claimgetdamagedparts.claimgetdamagedparts-yes XXXXXXXXXXXXXXx");
                 return helper.getVehicleParts().then((result) => {
                     console.log('vehicle part final result', result);
                     res.json({

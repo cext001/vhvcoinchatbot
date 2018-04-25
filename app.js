@@ -172,84 +172,38 @@ app.post('/api/messages', (req, res) => {
                 break;
             case "claimgetcauseofdamage.claimgetcauseofdamage-no.claimgetcauseofdamage-no-yes":
                 console.log("inside: claimgetcauseofdamage.claimgetcauseofdamage-no.claimgetcauseofdamage-no-yes");
-                res.json({
-                    messages: [
-                        {
-                            platform: "skype",
-                            speech: "I have made a note, Now can you please indicate which all parts of the vehicle were damaged in the accident?",
-                            type: 0
-                        },
-                        {
-                            platform: "skype",
-                            subtitle: "",
-                            title: "Please select",
-                            type: 1,
-                            imageUrl: "https://sparesboyz.com/wp-content/uploads/2017/07/Auto-Body-Parts.png",
-                            buttons: [
-                                {
-                                    postback: "Exposed Bumper (Front/Rear)",
-                                    text: "Exposed Bumper (Front/Rear)"
-                                },
-                                {
-                                    postback: "Unexposed Bumper (Front/Rear)",
-                                    text: "Unexposed Bumper (Front/Rear)"
-                                },
-                                {
-                                    postback: "Fascia",
-                                    text: "Fascia"
-                                },
-                                {
-                                    postback: "Grille",
-                                    text: "Grille"
-                                },
-                                {
-                                    postback: "Quarter Panel",
-                                    text: "Quarter Panel"
-                                },
-                                {
-                                    postback: "Pillars and Hard trim",
-                                    text: "Pillars and Hard trim"
-                                },
-                                {
-                                    postback: "Bonnet",
-                                    text: "Bonnet"
-                                },
-                                {
-                                    postback: "Roof Rack",
-                                    text: "Roof Rack"
-                                },
-                                {
-                                    postback: "Spoiler (Front/Rear)",
-                                    text: "Spoiler (Front/Rear)"
-                                },
-                                {
-                                    postback: "Front Door (Left/Right)",
-                                    text: "Front Door (Left/Right)"
-                                },
-                                {
-                                    postback: "Rear Door (Left/Right)",
-                                    text: "Rear Door (Left/Right)"
-                                },
-                                {
-                                    postback: "Door Handles (Front/Right)",
-                                    text: "Door Handles (Front/Right)"
-                                },
-                                {
-                                    postback: "Glass",
-                                    text: "Glass"
-                                },
-                                {
-                                    postback: "Sunroof",
-                                    text: "Sunroof"
-                                },
-                                {
-                                    postback: "Windshield",
-                                    text: "Windshield"
-                                }
-                            ]
-                        }
-                    ]
-                }).end();
+                return helper.getClaimPaymentDetails().then((result) => {
+                    console.log('vehicle part final result',result);
+                    res.json({
+                        messages: [
+                            {
+                                platform: "skype",
+                                speech: "I have made a note, Now can you please indicate which all parts of the vehicle were damaged in the accident?",
+                                type: 0
+                            },
+                            {
+                                platform: "skype",
+                                subtitle: "",
+                                title: "Please select",
+                                type: 1,
+                                imageUrl: "https://sparesboyz.com/wp-content/uploads/2017/07/Auto-Body-Parts.png",
+                                buttons: result
+                            }
+                        ]
+                    }).end();
+                }).catch((err) => {
+                    console.log('vehicle part error',err);
+                    res.json({
+                        messages: [
+                            {
+                                platform: "skype",
+                                speech: "Failed to retrieve vehicle parts",
+                                type: 0
+                            }
+                        ]
+                    }).end();
+                })
+                
                 break;
             case "claim.getdamagedparts":
                 /*var response = {};

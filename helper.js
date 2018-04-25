@@ -127,7 +127,7 @@ module.exports = {
                     console.log('response', response);
                     reject(error);
                 } else {
-                    console.log('create temp claim body', body);
+                    console.log('create temp claim body', JSON.stringify(body.result));
                     resolve(body.result);
                 }
             });

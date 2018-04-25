@@ -248,15 +248,8 @@ module.exports = {
                     console.log('response', response);
                     reject(error);
                 } else {
-                    var vehicleParts = [];
-                    lodash.forEach(body.result, function (value, key) {
-                        vehicleParts.push({
-                            postback: value.code,
-                            text: value.name
-                        });
-                    });
-                    console.log('fro  helper vehicleParts', vehicleParts);
-                    resolve(vehicleParts);
+                    console.log('submit claim body', JSON.stringify(body.result));
+                    resolve(body.result);
                 }
             });
         });

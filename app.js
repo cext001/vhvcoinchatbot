@@ -345,7 +345,8 @@ app.post('/api/messages', (req, res) => {
                                         platform: "skype",
                                         speech: "Please provide a valid policy number!.",
                                         type: 0
-                                    }]
+                                    }],
+                                actionIncomplete: true
                             });
                         }
                     }).catch((err) => {
@@ -356,7 +357,8 @@ app.post('/api/messages', (req, res) => {
                                     platform: "skype",
                                     speech: "Something went wrong!.",
                                     type: 0
-                                }]
+                                }],
+                            actionIncomplete: true
                         }).end();
                     })
                 } else {
@@ -367,7 +369,8 @@ app.post('/api/messages', (req, res) => {
                                 platform: "skype",
                                 speech: "Please provide a valid policy number.",
                                 type: 0
-                            }]
+                            }],
+                        actionIncomplete: true
                     }).end();
                 }
                 break;

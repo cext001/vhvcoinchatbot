@@ -44,7 +44,6 @@ app.post('/api/messages', (req, res) => {
                     }).end();
                 } else {
                     console.log("date matches with policy date");
-
                     return helper.getLossType().then((result) => {
                         lossTypes = result;
                         response = {
@@ -68,6 +67,8 @@ app.post('/api/messages', (req, res) => {
                                 }
                             ]
                         };
+                        console.log('final response succ', response);
+                        res.json(response).end();
                     }).catch((err) => {
                         console.log('error', err);
                         response = {
@@ -79,10 +80,9 @@ app.post('/api/messages', (req, res) => {
                                 }
                             ]
                         };
+                        console.log('final response errr', response);
+                        res.json(response).end();
                     })
-
-                    console.log('final response', response);
-                    res.json(response).end();
                 }
                 break;
             case "claim.getcauseofdamage":

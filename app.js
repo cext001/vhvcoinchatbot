@@ -16,41 +16,54 @@ app.post('/api/messages', (req, res) => {
         switch (req.body.result.action) {
             case "claim.getdateandtime":
                 console.log("inside: claim.getdateandtime");
-                res.json({
-                    messages: [
-                        {
-                            platform: "skype",
-                            speech: "Sure, thank you.",
-                            type: 0
-                        },
-                        {
-                            platform: "skype",
-                            speech: "Can you please help me with the type of claim that you want to initiate?",
-                            type: 0
-                        },
-                        {
-                            platform: "skype",
-                            subtitle: "",
-                            title: "Please select",
-                            type: 1,
-                            buttons: [
-                                {
-                                    postback: "Auto Claim",
-                                    text: "Auto Claim"
-                                },
-                                {
-                                    postback: "Glass Claim",
-                                    text: "Glass Claim"
-                                },
-                                {
-                                    postback: "Incident Only",
-                                    text: "Incident Only"
-                                }
-                            ]
+                if (req.body.result.actionIncomplete) {
+                    res.json({
+                        messages: [
+                            {
+                                platform: "skype",
+                                speech: "Please provide date and time",
+                                type: 0
+                            }]
+                    }).end();
+                } else {
+                    console.log('context', req.body.result.contexts[0]);
+                    res.json({
+                        messages: [
+                            {
+                                platform: "skype",
+                                speech: "Sure, thank you.",
+                                type: 0
+                            },
+                            {
+                                platform: "skype",
+                                speech: "Can you please help me with the type of claim that you want to initiate?",
+                                type: 0
+                            },
+                            {
+                                platform: "skype",
+                                subtitle: "",
+                                title: "Please select",
+                                type: 1,
+                                buttons: [
+                                    {
+                                        postback: "Auto Claim",
+                                        text: "Auto Claim"
+                                    },
+                                    {
+                                        postback: "Glass Claim",
+                                        text: "Glass Claim"
+                                    },
+                                    {
+                                        postback: "Incident Only",
+                                        text: "Incident Only"
+                                    }
+                                ]
 
-                        }
-                    ]
-                }).end();
+                            }
+                        ]
+                    }).end();
+                }
+
                 break;
             case "claim.getclaimtype":
                 console.log("inside: claim.getclaimtype");
@@ -297,7 +310,7 @@ app.post('/api/messages', (req, res) => {
                             var date = new Date(result[0].effectiveDate);
                             var policyType = result[0].policyType;
                             date = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
-                            console.log("Date:" + date + " Policytype" + policyType);
+                            console.log("Date:" + date + ", Policytype: " + policyType);
                             res.json({
                                 messages: [
                                     {

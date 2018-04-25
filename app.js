@@ -294,6 +294,8 @@ app.post('/api/messages', (req, res) => {
                         console.log(result);
                         if (result.length) {
                             console.log("valid policuy num");
+                            var date = new Date(result.effectiveDate);
+                            date = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
                             res.json({
                                 messages: [
                                     {
@@ -304,7 +306,17 @@ app.post('/api/messages', (req, res) => {
                                         platform: "skype",
                                         speech: "Please can I have your Date of Incident and time of incident.",
                                         type: 0
-                                    }]
+                                    }],
+                                contextOut: [
+                                    {
+                                        name: "policy-info",
+                                        parameters: {
+                                            effectiveDate: date,
+                                            policyType: result.policyType,
+                                        },
+                                        lifespan: 5
+                                    }
+                                ]
                             }).end();
                         } else {
                             console.log("invalid policuy num");
@@ -329,6 +341,7 @@ app.post('/api/messages', (req, res) => {
                         }).end();
                     })
                 } else {
+                    console.log("policy number length not correct");
                     res.json({
                         messages: [
                             {
@@ -340,7 +353,6 @@ app.post('/api/messages', (req, res) => {
                 }
                 break;
         }
-
     }
 })
 

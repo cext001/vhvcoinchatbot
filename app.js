@@ -95,7 +95,7 @@ app.post('/api/messages', (req, res) => {
                 var losscause = req.body.result.contexts[0].parameters.causeofdamage;
                 return helper.createTempClaim(policyNumber, lossdate, losscause).then((result) => {
                     console.log('create temp claim result', result);
-                    var claimNumber = result.result.claimNumber;
+                    var claimNumber = result.claimNumber;
                     message = "A temporary claim has been created on your behalf. Please note the claim number for future reference:" + claimNumber;
                 }).catch((err) => {
                     console.log('create temp claim error', err);

@@ -17,7 +17,10 @@ app.post('/api/messages', (req, res) => {
             case "claim.getdateandtime":
                 console.log("inside: claim.getdateandtime");
                 console.log('context', req.body.result.contexts[0]);
+                var response = {};
+                var lossTypes = {};
                 var effectiveDate = new Date(req.body.result.contexts[0].parameters.effectiveDate);
+                var selectedPolicyType = req.body.result.contexts[0].parameters.policyType;
                 var effectiveDateMonth;
                 if (effectiveDate.getMonth() < 9) {
                     effectiveDateMonth = effectiveDate.getMonth() + 1;
@@ -41,83 +44,46 @@ app.post('/api/messages', (req, res) => {
                     }).end();
                 } else {
                     console.log("date matches with policy date");
-                    res.json({
-                        messages: [
-                            {
-                                platform: "skype",
-                                speech: "Sure, thank you.",
-                                type: 0
-                            },
-                            {
-                                platform: "skype",
-                                speech: "Can you please help me with the type of claim that you want to initiate?",
-                                type: 0
-                            },
-                            {
-                                platform: "skype",
-                                subtitle: "",
-                                title: "Please select",
-                                type: 1,
-                                buttons: [
-                                    {
-                                        postback: "Auto Claim",
-                                        text: "Auto Claim"
-                                    },
-                                    {
-                                        postback: "Glass Claim",
-                                        text: "Glass Claim"
-                                    },
-                                    {
-                                        postback: "Incident Only",
-                                        text: "Incident Only"
-                                    }
-                                ]
 
-                            }
-                        ]
-                    }).end();
-                }
-                break;
-            case "claim.getclaimtype":
-                console.log("inside: claim.getclaimtype");
-                res.json({
-                    messages: [
-                        {
-                            platform: "skype",
-                            speech: "Now please help me out with the cause of damage?",
-                            type: 0
-                        },
-                        {
-                            platform: "skype",
-                            subtitle: "",
-                            title: "Please select",
-                            type: 1,
-                            buttons: [
+                    return helper.getClaimPaymentDetails().then((result) => {
+                        lossTypes = result;
+                        response = {
+                            messages: [
                                 {
-                                    postback: "Fire",
-                                    text: "Fire"
+                                    platform: "skype",
+                                    speech: "Selected policy type is: " + selectedPolicyType,
+                                    type: 0
                                 },
                                 {
-                                    postback: "Collision with pedestrian",
-                                    text: "Collision with pedestrian"
+                                    platform: "skype",
+                                    speech: "Now please help me out with the cause of damage?",
+                                    type: 0
                                 },
                                 {
-                                    postback: "Collision with another vehicle",
-                                    text: "Collision with another vehicle"
-                                },
-                                {
-                                    postback: "Collision with animal",
-                                    text: "Collision with animal"
-                                },
-                                {
-                                    postback: "Collision with Train or Bus",
-                                    text: "Collision with Train or Bus"
+                                    platform: "skype",
+                                    subtitle: "",
+                                    title: "Please select",
+                                    type: 1,
+                                    buttons: lossTypes
                                 }
                             ]
+                        };
+                    }).catch((err) => {
+                        console.log('error', err);
+                        response = {
+                            messages: [
+                                {
+                                    platform: "skype",
+                                    speech: "Something went wrong",
+                                    type: 0
+                                }
+                            ]
+                        };
+                    })
 
-                        }
-                    ]
-                }).end();
+                    console.log('final response', response);
+                    res.json(response).end();
+                }
                 break;
             case "claim.getcauseofdamage":
                 console.log("inside: claim.getcauseofdamage-no-custom-yes");

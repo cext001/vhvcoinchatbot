@@ -172,7 +172,7 @@ app.post('/api/messages', (req, res) => {
                 break;
             case "claimgetcauseofdamage.claimgetcauseofdamage-no.claimgetcauseofdamage-no-yes":
                 console.log("inside: claimgetcauseofdamage.claimgetcauseofdamage-no.claimgetcauseofdamage-no-yes");
-                return helper.getClaimPaymentDetails().then((result) => {
+                return helper.getVehicleParts().then((result) => {
                     console.log('vehicle part final result',result);
                     res.json({
                         messages: [

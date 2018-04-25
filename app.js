@@ -119,6 +119,15 @@ app.post('/api/messages', (req, res) => {
                                     }
                                 ]
                             }
+                        ], 
+                        contextOut: [
+                            {
+                                name: "tempclaim-info",
+                                parameters: {
+                                    tempclaiminfo: result
+                                },
+                                lifespan: 5
+                            }
                         ]
                     }).end();
                 }).catch((err) => {

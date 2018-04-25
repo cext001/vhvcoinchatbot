@@ -341,7 +341,7 @@ app.post('/api/messages', (req, res) => {
                 break;
             case "claim.getthirdpaartyassistanceinfo":
                 console.log("inside claim.getthirdpaartyassistanceinfo");
-
+                console.log('context', JSON.stringify(req.body.result.contexts[0]));
                 break;
         }
     }

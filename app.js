@@ -118,7 +118,7 @@ app.post('/api/messages', (req, res) => {
                                     }
                                 ]
                             }
-                        ], 
+                        ],
                         contextOut: [
                             {
                                 name: "tempclaim-info",
@@ -239,7 +239,8 @@ app.post('/api/messages', (req, res) => {
                                         parameters: {
                                             effectiveDate: date,
                                             policyType: policyType,
-                                            PolicyNumber: policyNumber
+                                            PolicyNumber: policyNumber,
+                                            searchpolicyinfo: result
                                         },
                                         lifespan: 5
                                     }
@@ -350,6 +351,12 @@ app.post('/api/messages', (req, res) => {
             case "claim.getthirdpaartyassistanceinfo":
                 console.log("inside claim.getthirdpaartyassistanceinfo");
                 console.log('context', JSON.stringify(req.body.result.contexts));
+                var tempClaimInfo = req.body.result.contexts[1].parameters;
+                /*return helper.submitClaim(tempClaimInfo).then((result) => {
+                    console.log(result);
+                }).catch((err) => {
+                    console.log(err);
+                })*/
                 break;
         }
     }

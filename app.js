@@ -45,7 +45,7 @@ app.post('/api/messages', (req, res) => {
                 } else {
                     console.log("date matches with policy date");
 
-                    return helper.getClaimPaymentDetails().then((result) => {
+                    return helper.getLossType().then((result) => {
                         lossTypes = result;
                         response = {
                             messages: [

@@ -352,11 +352,31 @@ app.post('/api/messages', (req, res) => {
                 console.log("inside claim.getthirdpaartyassistanceinfo");
                 console.log('context', JSON.stringify(req.body.result.contexts));
                 var tempClaimInfo = req.body.result.contexts[1].parameters;
-                /*return helper.submitClaim(tempClaimInfo).then((result) => {
-                    console.log(result);
+                var policyInfo = req.body.result.contexts[2].parameters;
+                return helper.submitClaim(tempClaimInfo, policyInfo).then((result) => {
+                    res.json({
+                        messages: [
+                            {
+                                platform: "skype",
+                                speech: "Thanks for sharing the information.Your claim has been initiated and your claim registration number is "+result.claimNumber+". You will shortly receive a call from our Claims Team who will assist you further. ",
+                                type: 0
+                            },
+                            {
+                                platform: "skype",
+                                speech: "Is there anything else that I may help you with?",
+                                type: 0
+                            }]
+                    }).end();
                 }).catch((err) => {
-                    console.log(err);
-                })*/
+                    res.json({
+                        messages: [
+                            {
+                                platform: "skype",
+                                speech: "Do you need any third party assitance",
+                                type: 0
+                            }]
+                    }).end();
+                })
                 break;
         }
     }

@@ -195,7 +195,7 @@ module.exports = {
             });
         });
     },
-    "submitClaim": function () {
+    "submitClaim": function (tempClaimInfo, policyInfo) {
         return new Promise(function (resolve, reject) {
             console.log('submitClaim');
             var options = {
@@ -213,82 +213,29 @@ module.exports = {
                     "params": [
                         {
                             "lossDate": "2018-04-01T00:00:00Z",
-                            "lossType": "AUTO",
+                            "lossType": tempClaimInfo.lossType,
                             "lossCause": "vehcollision",
-                            "description": "testNewClaim",
-                            "claimType": "PACollisionCov",
-                            "claimNumber": "999-99-999706",
+                            "description": tempClaimInfo.description,
+                            "claimNumber": tempClaimInfo.claimNumber,
                             "policy": {
-                                "policyNumber": "54-123456",
-                                "policyType": "PersonalAuto",
-                                "expirationDate": "2018-01-20T00:00:00Z",
-                                "effectiveDate": "2019-01-19T00:00:00Z",
+                                "policyNumber": policyInfo.searchpolicyinfo.policyNumber,
+                                "policyType": policyInfo.searchpolicyinfo.policyType,
+                                "expirationDate": policyInfo.searchpolicyinfo.expirationDate,
+                                "effectiveDate": policyInfo.searchpolicyinfo.effectiveDate,
                                 "status": "In force"
                             },
                             "mainContact": {
-                                "contactName": "Kristie Kristie",
-                                "firstName": "Kristie",
-                                "lastName": "Kristie",
-                                "emailAddress1": "kristiekristie@gmail.com",
-                                "workNumber": "530-225-3426",
+                                "contactName": policyInfo.searchpolicyinfo.insured,
                                 "policyRole": "insured",
                                 "primaryAddress": {
-                                    "addressLine1": "1657 Riverside Drive Redding",
-                                    "addressLine3": "Street Sacramento",
-                                    "city": "Los Angeles",
-                                    "state": "CA",
-                                    "country": "US",
-                                    "postalCode": "96001"
+                                    "addressLine1": policyInfo.searchpolicyinfo.address,
+                                    "city": policyInfo.searchpolicyinfo.city,
+                                    "state": policyInfo.searchpolicyinfo.state,
+                                    "postalCode": policyInfo.searchpolicyinfo.zip
                                 }
                             },
-                            "relatedContacts": [
-                                {
-                                    "role": "pedestrian",
-                                    "injured": false,
-                                    "contact": {
-                                        "contactName": "Tom Shannon",
-                                        "firstName": "Tom",
-                                        "lastName": "Shannon",
-                                        "policyRole": "pedestrian"
-                                    }
-                                }
-                            ],
-                            "lobs": {
-                                "personalAuto": {
-                                    "vehicles": [
-                                        {
-                                            "licensePlate": "2GDH967",
-                                            "make": "Toyota",
-                                            "model": "Corolla",
-                                            "state": "CA",
-                                            "vIN": "3DGF78575GD892534",
-                                            "year": 1996,
-                                            "country": "US",
-                                            "policyVehicle": true
-                                        }
-                                    ],
-                                    "vehicleIncidents": [
-                                        {
-                                            "damageDescription": "Bonnet,Exposed Bumper (Front/Rear), Fascia",
-                                            "driver": {
-                                                "contactName": "Cheryl Mills",
-                                                "firstName": "Cheryl",
-                                                "lastName": "Mills",
-                                                "policyRole": "driver"
-                                            },
-                                            "vehicle": {
-                                                "licensePlate": "2GDH967",
-                                                "make": "Toyota",
-                                                "model": "Corolla",
-                                                "state": "CA",
-                                                "vIN": "3DGF78575GD892534",
-                                                "year": 1996,
-                                                "country": "US"
-                                            }
-                                        }
-                                    ]
-                                }
-                            }
+                            "relatedContacts": tempClaimInfo.relatedContacts,
+                            "lobs": tempClaimInfo.lobs
                         }
                     ]
                 },

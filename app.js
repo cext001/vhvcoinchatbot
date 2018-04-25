@@ -17,11 +17,11 @@ app.post('/api/messages', (req, res) => {
             case "claim.getdateandtime":
                 console.log("inside: claim.getdateandtime");
                 console.log('context', req.body.result.contexts[0]);
-                var effectiveDate = req.body.result.contexts[0].parameters.effectiveDate;
+                var effectiveDate = new Date(req.body.result.contexts[0].parameters.effectiveDate);
                 var effectiveDateMonth;
                 if (effectiveDate.getMonth() < 9) {
                     effectiveDateMonth = effectiveDate.getMonth() + 1;
-                    effectiveDateMonth = "0"+effectiveDateMonth;
+                    effectiveDateMonth = "0" + effectiveDateMonth;
                 } else {
                     effectiveDateMonth = effectiveDate.getMonth() + 1;
                 }

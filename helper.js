@@ -24,16 +24,8 @@ module.exports = {
                     console.log('error', error);
                     console.log('response', response);
                     reject(error);
-                } else {
-                    var lossTypes = [];
-                    lodash.forEach(body.result, function (value, key) {
-                        lossTypes.push({
-                            postback: value.code,
-                            text: value.name
-                        });
-                    });
-                    console.log('losstypes',lossTypes);
-                    resolve(lossTypes);
+                } else {                    
+                    resolve(body);
                 }
             });
         });
@@ -93,8 +85,15 @@ module.exports = {
                     console.log('response', response);
                     reject(error);
                 } else {
-                    console.log(body);
-                    resolve(body);
+                    var lossTypes = [];
+                    lodash.forEach(body.result, function (value, key) {
+                        lossTypes.push({
+                            postback: value.code,
+                            text: value.name
+                        });
+                    });
+                    console.log('fro  helper losstypes',lossTypes);
+                    resolve(lossTypes);
                 }
             });
         });

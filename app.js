@@ -97,40 +97,49 @@ app.post('/api/messages', (req, res) => {
                     console.log('create temp claim result', result);
                     var claimNumber = result.claimNumber;
                     message = "A temporary claim has been created on your behalf. Please note the claim number for future reference:" + claimNumber;
+                    res.json({
+                        messages: [
+                            {
+                                platform: "skype",
+                                speech: message,
+                                type: 0
+                            },
+                            {
+                                platform: "skype",
+                                speech: "Sorry to hear about the accident! ;-( Was anyone injured in the accident?",
+                                type: 0
+                            },
+                            {
+                                platform: "skype",
+                                subtitle: "",
+                                title: "Please select",
+                                type: 1,
+                                buttons: [
+                                    {
+                                        postback: "Yes",
+                                        text: "Yes"
+                                    },
+                                    {
+                                        postback: "No",
+                                        text: "No"
+                                    }
+                                ]
+                            }
+                        ]
+                    }).end();
                 }).catch((err) => {
                     console.log('create temp claim error', err);
                     message = "Something went wrong while creating temporary claim.";
+                    res.json({
+                        messages: [
+                            {
+                                platform: "skype",
+                                speech: message,
+                                type: 0
+                            }
+                        ]
+                    }).end();
                 })
-                res.json({
-                    messages: [
-                        {
-                            platform: "skype",
-                            speech: message,
-                            type: 0
-                        },
-                        {
-                            platform: "skype",
-                            speech: "Sorry to hear about the accident! ;-( Was anyone injured in the accident?",
-                            type: 0
-                        },
-                        {
-                            platform: "skype",
-                            subtitle: "",
-                            title: "Please select",
-                            type: 1,
-                            buttons: [
-                                {
-                                    postback: "Yes",
-                                    text: "Yes"
-                                },
-                                {
-                                    postback: "No",
-                                    text: "No"
-                                }
-                            ]
-                        }
-                    ]
-                }).end();
                 break
             case "claimgetcauseofdamage.claimgetcauseofdamage-no":
                 console.log("inside: claimgetcauseofdamage.claimgetcauseofdamage-no");

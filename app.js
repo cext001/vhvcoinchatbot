@@ -96,14 +96,8 @@ app.post('/api/messages', (req, res) => {
                 return helper.createTempClaim(policyNumber, lossdate, losscause).then((result) => {
                     console.log('create temp claim result', result);
                     var claimNumber = result.claimNumber;
-                    message = "A temporary claim has been created on your behalf. Please note the claim number for future reference:" + claimNumber;
                     res.json({
                         messages: [
-                            {
-                                platform: "skype",
-                                speech: message,
-                                type: 0
-                            },
                             {
                                 platform: "skype",
                                 speech: "Sorry to hear about the accident! ;-( Was anyone injured in the accident?",
@@ -173,7 +167,7 @@ app.post('/api/messages', (req, res) => {
             case "claimgetcauseofdamage.claimgetcauseofdamage-no.claimgetcauseofdamage-no-yes":
                 console.log("inside: claimgetcauseofdamage.claimgetcauseofdamage-no.claimgetcauseofdamage-no-yes");
                 return helper.getVehicleParts().then((result) => {
-                    console.log('vehicle part final result',result);
+                    console.log('vehicle part final result', result);
                     res.json({
                         messages: [
                             {
@@ -183,7 +177,6 @@ app.post('/api/messages', (req, res) => {
                             },
                             {
                                 platform: "skype",
-                                subtitle: "",
                                 title: "Please select",
                                 type: 1,
                                 imageUrl: "https://sparesboyz.com/wp-content/uploads/2017/07/Auto-Body-Parts.png",
@@ -192,7 +185,7 @@ app.post('/api/messages', (req, res) => {
                         ]
                     }).end();
                 }).catch((err) => {
-                    console.log('vehicle part error',err);
+                    console.log('vehicle part error', err);
                     res.json({
                         messages: [
                             {
@@ -202,62 +195,11 @@ app.post('/api/messages', (req, res) => {
                             }
                         ]
                     }).end();
-                })
-                
-                break;
-            case "claim.getdamagedparts":
-                /*var response = {};
-                var verchiclepartsincontext = req.body.result.contexts[0].parameters.partsofvehicle;
-                var verchiclepartslist = (req.body.result.contexts[0].parameters.partsofvehiclelist) ? req.body.result.contexts[0].parameters.partsofvehiclelist : "";
-                console.log("inside claim.getdamagedparts");
-                console.log(req.body.result.contexts[0]);
-
-
-                var messsage = verchiclepartsincontext + " has been added.";
-                var vehicleparts = verchiclepartslist.split(',');
-                console.log("Array length:" + vehicleparts.length);
-                if (vehicleparts.length == 1) {
-                    if (vehicleparts[0] == verchiclepartsincontext) {
-                        verchiclepartslist = verchiclepartslist;
-                    } else if (vehicleparts[0] == "") {
-                        verchiclepartslist = verchiclepartsincontext;
-                    } else {
-                        verchiclepartslist = verchiclepartslist + ", " + verchiclepartsincontext;
-                    }
-                } else {
-                    if (!(vehicleparts.indexOf(verchiclepartsincontext) > -1)) {
-                        verchiclepartslist + "," + verchiclepartsincontext
-                    } else {
-                        messsage = verchiclepartsincontext + " is already added.";
-                    }
-                }
-
-                response = {
-                    messages: [
-                        {
-                            platform: "skype",
-                            speech: messsage,
-                            type: 0
-                        }
-                    ],
-                    contextOut: [
-                        {
-                            name: "vehicle-damagedpart",
-                            parameters: {
-                                partsofvehiclelist: verchiclepartslist
-                            },
-                            lifespan: 5
-                        }
-                    ]
-                };
-                console.log(JSON.stringify(response));
-                res.json(response).end();*/
-                console.log("insider damaged parts");
+                });
                 break;
             case "claim.getpolicynumber":
                 /*console.log("insider claim.getpolicynumber");
                 controller.handlePolicyNumber;*/
-                console.log("Ssssssss");
                 var out = {};
                 var policyNumber = req.body.result.parameters.PolicyNumber + "";
                 console.log("policyNumber:" + policyNumber);
@@ -331,6 +273,75 @@ app.post('/api/messages', (req, res) => {
                         actionIncomplete: true
                     }).end();
                 }
+                break;
+            case "claimgetdamagedparts.claimgetdamagedparts-yes":
+                console.log("inside claimgetdamagedparts.claimgetdamagedparts-yes");
+                return helper.getVehicleParts().then((result) => {
+                    console.log('vehicle part final result', result);
+                    res.json({
+                        messages: [
+                            {
+                                platform: "skype",
+                                speech: "Would you please indicate the damage to third party vehicle",
+                                type: 0
+                            },
+                            {
+                                platform: "skype",
+                                title: "Please select",
+                                type: 1,
+                                imageUrl: "https://sparesboyz.com/wp-content/uploads/2017/07/Auto-Body-Parts.png",
+                                buttons: result
+                            }
+                        ]
+                    }).end();
+                }).catch((err) => {
+                    console.log('vehicle part error', err);
+                    res.json({
+                        messages: [
+                            {
+                                platform: "skype",
+                                speech: "Failed to retrieve vehicle parts",
+                                type: 0
+                            }
+                        ]
+                    }).end();
+                });
+                break;
+            case "claimgetdamagedparts.claimgetdamagedparts-yes.claimgetdamagedparts-yes-getthirdpartydamagedparts":
+                console.log("inside claimgetdamagedparts.claimgetdamagedparts-yes.claimgetdamagedparts-yes-getthirdpartydamagedparts");
+                res.json({
+                    messages: [
+                        {
+                            platform: "skype",
+                            speech: "Good to know that! :-) Has the vehicle been damaged in the accident?",
+                            type: 0
+                        },
+                        {
+                            platform: "skype",
+                            subtitle: "",
+                            title: "Please select",
+                            type: 1,
+                            buttons: [
+                                {
+                                    postback: "Rented Vehicle",
+                                    text: "Rented Vehicle"
+                                },
+                                {
+                                    postback: "Towing Assistance",
+                                    text: "Towing Assistance"
+                                },
+                                {
+                                    postback: "Repair Workshop",
+                                    text: "Repair Workshop"
+                                }
+                            ]
+                        }
+                    ]
+                }).end();
+                break;
+            case "claim.getthirdpaartyassistanceinfo":
+                console.log("inside claim.getthirdpaartyassistanceinfo");
+                
                 break;
         }
     }

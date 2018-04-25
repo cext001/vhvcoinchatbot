@@ -60,3 +60,50 @@ module.exports = {
         res.json(out).end();
     }
 }
+
+/*var response = {};
+                var verchiclepartsincontext = req.body.result.contexts[0].parameters.partsofvehicle;
+                var verchiclepartslist = (req.body.result.contexts[0].parameters.partsofvehiclelist) ? req.body.result.contexts[0].parameters.partsofvehiclelist : "";
+                console.log("inside claim.getdamagedparts");
+                console.log(req.body.result.contexts[0]);
+
+
+                var messsage = verchiclepartsincontext + " has been added.";
+                var vehicleparts = verchiclepartslist.split(',');
+                console.log("Array length:" + vehicleparts.length);
+                if (vehicleparts.length == 1) {
+                    if (vehicleparts[0] == verchiclepartsincontext) {
+                        verchiclepartslist = verchiclepartslist;
+                    } else if (vehicleparts[0] == "") {
+                        verchiclepartslist = verchiclepartsincontext;
+                    } else {
+                        verchiclepartslist = verchiclepartslist + ", " + verchiclepartsincontext;
+                    }
+                } else {
+                    if (!(vehicleparts.indexOf(verchiclepartsincontext) > -1)) {
+                        verchiclepartslist + "," + verchiclepartsincontext
+                    } else {
+                        messsage = verchiclepartsincontext + " is already added.";
+                    }
+                }
+
+                response = {
+                    messages: [
+                        {
+                            platform: "skype",
+                            speech: messsage,
+                            type: 0
+                        }
+                    ],
+                    contextOut: [
+                        {
+                            name: "vehicle-damagedpart",
+                            parameters: {
+                                partsofvehiclelist: verchiclepartslist
+                            },
+                            lifespan: 5
+                        }
+                    ]
+                };
+                console.log(JSON.stringify(response));
+                res.json(response).end();*/

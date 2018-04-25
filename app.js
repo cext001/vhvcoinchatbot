@@ -17,8 +17,17 @@ app.post('/api/messages', (req, res) => {
             case "claim.getdateandtime":
                 console.log("inside: claim.getdateandtime");
                 console.log('context', req.body.result.contexts[0]);
-                console.log("Policy effective date: " + req.body.result.contexts[0].parameters.effectiveDate + ", IncidentDate: " + req.body.result.parameters.IncidentDate + ", Incident Time: " + req.body.result.parameters.IncidentTime);
-                if (req.body.result.parameters.IncidentDate != req.body.result.contexts[0].parameters.effectiveDate) {
+                var effectiveDate = req.body.result.contexts[0].parameters.effectiveDate;
+                var effectiveDateMonth;
+                if (effectiveDate.getMonth() < 9) {
+                    effectiveDateMonth = effectiveDate.getMonth() + 1;
+                    effectiveDateMonth = "0"+effectiveDateMonth;
+                } else {
+                    effectiveDateMonth = effectiveDate.getMonth() + 1;
+                }
+                effectiveDate = effectiveDate.getFullYear() + '-' + effectiveDateMonth + '-' + effectiveDate.getDate();
+                console.log("Policy effective date: " + effectiveDate + ", IncidentDate: " + req.body.result.parameters.IncidentDate + ", Incident Time: " + req.body.result.parameters.IncidentTime);
+                if (req.body.result.parameters.IncidentDate != effectiveDate) {
                     console.log("date not matches with policy date");
                     res.json({
                         messages: [
@@ -312,8 +321,8 @@ app.post('/api/messages', (req, res) => {
                         if (result.length) {
                             console.log("valid policuy num");
                             var date = new Date(result[0].effectiveDate);
-                            var policyType = result[0].policyType;
                             date = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+                            var policyType = result[0].policyType;
                             console.log("Date:" + date + ", Policytype: " + policyType);
                             res.json({
                                 messages: [

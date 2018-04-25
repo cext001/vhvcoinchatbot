@@ -63,6 +63,7 @@ app.post('/api/messages', (req, res) => {
                                     subtitle: "",
                                     title: "Please select",
                                     type: 1,
+                                    imageUrl: "http://pb-attorneys.com/wp-content/uploads/2015/08/2-car-crash-1.jpg",
                                     buttons: lossTypes
                                 }
                             ]
@@ -307,6 +308,7 @@ app.post('/api/messages', (req, res) => {
                                         parameters: {
                                             effectiveDate: date,
                                             policyType: policyType,
+                                            PolicyNumber:policyNumber
                                         },
                                         lifespan: 5
                                     }

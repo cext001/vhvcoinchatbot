@@ -24,7 +24,7 @@ module.exports = {
                     console.log('error', error);
                     console.log('response', response);
                     reject(error);
-                } else {                    
+                } else {
                     resolve(body);
                 }
             });
@@ -92,10 +92,51 @@ module.exports = {
                             text: value.name
                         });
                     });
-                    console.log('fro  helper losstypes',lossTypes);
+                    console.log('fro  helper losstypes', lossTypes);
                     resolve(lossTypes);
                 }
             });
         });
     },
+    "createTempClaim": function (policyNumber) {
+        return new Promise(function (resolve, reject) {
+            console.log('getLossType');
+            var options = {
+                method: 'POST',
+                url: config.base_url + 'cc/service/edge/fnol/fnol',
+                headers:
+                    {
+                        'cache-control': 'no-cache',
+                        'content-type': 'application/json',
+                        authorization: 'Basic c3U6Z3c='
+                    },
+                body: {
+                    jsonrpc: "2.0", method: "createTempClaim", params: [{
+                        LossType: "AUTO",
+                        LossDate: "2018-04-17T18:30:00Z",
+                        LossCause: "vehcollision"
+                    }]
+                },
+                json: true
+            };
+            console.log(JSON.stringify(options));
+            request(JSON.parse(JSON.stringify(options)), function (error, response, body) {
+                if (error) {
+                    console.log('error', error);
+                    console.log('response', response);
+                    reject(error);
+                } else {
+                    var lossTypes = [];
+                    lodash.forEach(body.result, function (value, key) {
+                        lossTypes.push({
+                            postback: value.code,
+                            text: value.name
+                        });
+                    });
+                    console.log('fro  helper losstypes', lossTypes);
+                    resolve(lossTypes);
+                }
+            });
+        });
+    }
 };

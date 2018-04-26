@@ -20,17 +20,26 @@ app.post('/api/messages', (req, res) => {
                 var response = {};
                 var lossTypes = {};
                 var effectiveDate = new Date(req.body.result.contexts[0].parameters.effectiveDate);
+                var expirationDate = new Date(req.body.result.contexts[0].parameters.expirationDate);
                 var selectedPolicyType = req.body.result.contexts[0].parameters.policyType;
-                var effectiveDateMonth;
-                if (effectiveDate.getMonth() < 9) {
-                    effectiveDateMonth = effectiveDate.getMonth() + 1;
-                    effectiveDateMonth = "0" + effectiveDateMonth;
-                } else {
-                    effectiveDateMonth = effectiveDate.getMonth() + 1;
-                }
-                effectiveDate = effectiveDate.getFullYear() + '-' + effectiveDateMonth + '-' + effectiveDate.getDate();
+
                 console.log("Policy effective date: " + effectiveDate + ", IncidentDate: " + req.body.result.parameters.IncidentDate + ", Incident Time: " + req.body.result.parameters.IncidentTime);
-                if (req.body.result.parameters.IncidentDate != effectiveDate) {
+
+                var dateFrom = effectiveDate;
+                var dateTo = "02-09-2013";
+                var IncidentDate = req.body.result.parameters.IncidentDate;
+
+                var d1 = effectiveDate.split("-");
+                var d2 = expirationDate.split("-");
+                var c = IncidentDate.split("-");
+
+                var from = new Date(d1[2], parseInt(d1[1]) - 1, d1[0]);
+                var to = new Date(d2[2], parseInt(d2[1]) - 1, d2[0]);
+                var check = new Date(c[2], parseInt(c[1]) - 1, c[0]);
+
+                console.log("check: " + check + ",from:" + from + ",to:" + to);
+
+                if (check > from && check < to) {
                     console.log("date not matches with policy date");
                     res.json({
                         messages: [
@@ -43,7 +52,7 @@ app.post('/api/messages', (req, res) => {
                         actionIncomplete: true
                     }).end();
                 } else {
-                    console.log("date matches with policy date");
+                    console.log("Incident date should fall within effective date and expiration date.");
                     return helper.getLossType().then((result) => {
                         lossTypes = result;
                         response = {
@@ -218,10 +227,29 @@ app.post('/api/messages', (req, res) => {
                         console.log(result);
                         if (result.length) {
                             console.log("valid policuy num");
-                            var date = new Date(result[0].effectiveDate);
-                            date = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+
+                            var effectiveDate = new Date(result[0].effectiveDate);
+                            var effectiveDateMonth;
+                            if (effectiveDate.getMonth() < 9) {
+                                effectiveDateMonth = effectiveDate.getMonth() + 1;
+                                effectiveDateMonth = "0" + effectiveDateMonth;
+                            } else {
+                                effectiveDateMonth = effectiveDate.getMonth() + 1;
+                            }
+                            effectiveDate = effectiveDate.getFullYear() + '-' + effectiveDateMonth + '-' + effectiveDate.getDate();
+
+                            var expirationDate = new Date(result[0].expirationDate);
+                            var expirationDateMonth;
+                            if (expirationDate.getMonth() < 9) {
+                                expirationDateMonth = expirationDate.getMonth() + 1;
+                                expirationDateMonth = "0" + expirationDateMonth;
+                            } else {
+                                expirationDateMonth = expirationDate.getMonth() + 1;
+                            }
+                            effectiveDate = expirationDate.getFullYear() + '-' + expirationDateMonth + '-' + expirationDate.getDate();
+
                             var policyType = result[0].policyType;
-                            console.log("Date:" + date + ", Policytype: " + policyType);
+                            console.log("effectiveDate:" + effectiveDate + ", Policytype: " + policyType + ", expirationDate:" + expirationDate);
                             res.json({
                                 messages: [
                                     {
@@ -237,7 +265,8 @@ app.post('/api/messages', (req, res) => {
                                     {
                                         name: "policy-info",
                                         parameters: {
-                                            effectiveDate: date,
+                                            effectiveDate: effectiveDate,
+                                            expirationDate: expirationDate,
                                             policyType: policyType,
                                             PolicyNumber: policyNumber,
                                             searchpolicyinfo: result
@@ -358,7 +387,7 @@ app.post('/api/messages', (req, res) => {
                         messages: [
                             {
                                 platform: "skype",
-                                speech: "Thanks for sharing the information.Your claim has been initiated and your claim registration number is "+result.claimNumber+". You will shortly receive a call from our Claims Team who will assist you further. ",
+                                speech: "Thanks for sharing the information.Your claim has been initiated and your claim registration number is " + result.claimNumber + ". You will shortly receive a call from our Claims Team who will assist you further. ",
                                 type: 0
                             },
                             {

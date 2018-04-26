@@ -258,7 +258,7 @@ app.post('/api/messages', (req, res) => {
                                         type: 0
                                     }, {
                                         platform: "skype",
-                                        speech: "Please can I have your Date of Incident and time of incident.",
+                                        speech: "Please can I have your Date of Incident(example format:-2018-01-19).",
                                         type: 0
                                     }],
                                 contextOut: [
@@ -313,7 +313,7 @@ app.post('/api/messages', (req, res) => {
                 }
                 break;
             case "claimgetdamagedparts.claimgetdamagedparts-yes":
-                console.log("inside claimgetdamagedparts.claimgetdamagedparts-yes XXXXXXXXXXXXXXx");
+                console.log("inside claimgetdamagedparts.claimgetdamagedparts-yes");
                 return helper.getVehicleParts().then((result) => {
                     console.log('vehicle part final result', result);
                     res.json({
@@ -427,7 +427,7 @@ app.post('/api/messages', (req, res) => {
                                 type: 0
                             }]
                     }).end();
-                })
+                });
                 break;
         }
     }

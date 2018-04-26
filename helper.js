@@ -198,6 +198,27 @@ module.exports = {
     "submitClaim": function (tempClaimInfo, policyInfo, damageDescription) {
         return new Promise(function (resolve, reject) {
             console.log('submitClaim');
+            tempClaimInfo.lobs.personalAuto.vehicleIncidents = [
+                {
+                    "damageDescription": damageDescription,
+                    "driver": {
+                        "contactName": "Cheryl Mills",
+                        "firstName": "Cheryl",
+                        "lastName": "Mills",
+                        "policyRole": "driver"
+                    },
+                    "vehicle": {
+                        "licensePlate": "2GDH967",
+                        "make": "Toyota",
+                        "model": "Corolla",
+                        "state": "CA",
+                        "vIN": "3DGF78575GD892534",
+                        "year": 1996,
+                        "country": "US"
+                    }
+                }
+            ];
+
             var params = {
                 "lossDate": "2018-04-01T00:00:00Z",
                 "lossType": tempClaimInfo.lossType,
@@ -224,22 +245,8 @@ module.exports = {
                 "relatedContacts": tempClaimInfo.relatedContacts,
                 "lobs": tempClaimInfo.lobs
             };
-            params.lobs.personalAuto.vehicleIncidents.damageDescription = damageDescription;
-            params.lobs.personalAuto.vehicleIncidents.driver = {
-                "contactName": "Cheryl Mills",
-                "firstName": "Cheryl",
-                "lastName": "Mills",
-                "policyRole": "driver"
-            };
-            params.lobs.personalAuto.vehicleIncidents.vehicle = {
-                "licensePlate": "2GDH967",
-                "make": "Toyota",
-                "model": "Corolla",
-                "state": "CA",
-                "vIN": "3DGF78575GD892534",
-                "year": 1996,
-                "country": "US"
-            };
+
+
             var options = {
                 method: 'POST',
                 url: config.base_url + 'cc/service/edge/fnol/fnol',

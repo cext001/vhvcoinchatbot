@@ -218,7 +218,7 @@ module.exports = {
                     }
                 }
             ];
-
+            console.log("temp claim info", tempClaimInfo);
             var params = {
                 "lossDate": "2018-04-01T00:00:00Z",
                 "lossType": tempClaimInfo.lossType,

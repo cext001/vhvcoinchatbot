@@ -383,8 +383,27 @@ app.post('/api/messages', (req, res) => {
                 var tempClaimInfo = req.body.result.contexts[1].parameters.tempclaiminfo;
                 var policyInfo = req.body.result.contexts[2].parameters.searchpolicyinfo[0];
                 var damageDescription = req.body.result.contexts[0].parameters.partsofvehicle + ", " + req.body.result.contexts[3].parameters.partsofvehicle;
-                console.log("policyInfo", policyInfo);
-                /*return helper.submitClaim(tempClaimInfo, policyInfo, damageDescription).then((result) => {
+
+                tempClaimInfo.lobs.personalAuto.vehicleIncidents.push({
+                    "damageDescription": damageDescription,
+                    "driver": {
+                        "contactName": "Cheryl Mills",
+                        "firstName": "Cheryl",
+                        "lastName": "Mills",
+                        "policyRole": "driver"
+                    },
+                    "vehicle": {
+                        "licensePlate": "2GDH967",
+                        "make": "Toyota",
+                        "model": "Corolla",
+                        "state": "CA",
+                        "vIN": "3DGF78575GD892534",
+                        "year": 1996,
+                        "country": "US"
+                    }
+                });
+
+                return helper.submitClaim(tempClaimInfo, policyInfo).then((result) => {
                     res.json({
                         messages: [
                             {
@@ -399,7 +418,7 @@ app.post('/api/messages', (req, res) => {
                             }]
                     }).end();
                 }).catch((err) => {
-                    console.log("error here",err);
+                    console.log("error here", err);
                     res.json({
                         messages: [
                             {
@@ -408,20 +427,7 @@ app.post('/api/messages', (req, res) => {
                                 type: 0
                             }]
                     }).end();
-                })*/
-                res.json({
-                    messages: [
-                        {
-                            platform: "skype",
-                            speech: "Thanks for sharing the information.Your claim has been initiated and your claim registration number is " + tempClaimInfo.claimNumber + ". You will shortly receive a call from our Claims Team who will assist you further. ",
-                            type: 0
-                        },
-                        {
-                            platform: "skype",
-                            speech: "Is there anything else that I may help you with?",
-                            type: 0
-                        }]
-                }).end();
+                })
                 break;
         }
     }

@@ -246,7 +246,7 @@ app.post('/api/messages', (req, res) => {
                             } else {
                                 expirationDateMonth = expirationDate.getMonth() + 1;
                             }
-                            effectiveDate = expirationDate.getFullYear() + '-' + expirationDateMonth + '-' + expirationDate.getDate();
+                            expirationDate = expirationDate.getFullYear() + '-' + expirationDateMonth + '-' + expirationDate.getDate();
 
                             var policyType = result[0].policyType;
                             console.log("effectiveDate:" + effectiveDate + ", Policytype: " + policyType + ", expirationDate:" + expirationDate);

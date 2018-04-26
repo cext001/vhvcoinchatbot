@@ -382,7 +382,9 @@ app.post('/api/messages', (req, res) => {
                 console.log('context', JSON.stringify(req.body.result.contexts));
                 var tempClaimInfo = req.body.result.contexts[1].parameters.tempclaiminfo;
                 var policyInfo = req.body.result.contexts[2].parameters.searchpolicyinfo[0];
-                return helper.submitClaim(tempClaimInfo, policyInfo).then((result) => {
+                var damageDescription = req.body.result.contexts[0].parameters.partsofvehicle+", "+req.body.result.contexts[3].parameters.partsofvehicle;
+                console.log("policyInfo", policyInfo);
+                return helper.submitClaim(tempClaimInfo, policyInfo, damageDescription).then((result) => {
                     res.json({
                         messages: [
                             {
@@ -397,11 +399,12 @@ app.post('/api/messages', (req, res) => {
                             }]
                     }).end();
                 }).catch((err) => {
+                    console.log("error here",err);
                     res.json({
                         messages: [
                             {
                                 platform: "skype",
-                                speech: "Do you need any third party assitance",
+                                speech: "Something went wrong when submitting the claim",
                                 type: 0
                             }]
                     }).end();

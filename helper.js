@@ -195,9 +195,51 @@ module.exports = {
             });
         });
     },
-    "submitClaim": function (tempClaimInfo, policyInfo) {
+    "submitClaim": function (tempClaimInfo, policyInfo, damageDescription) {
         return new Promise(function (resolve, reject) {
             console.log('submitClaim');
+            var params = {
+                "lossDate": "2018-04-01T00:00:00Z",
+                "lossType": tempClaimInfo.lossType,
+                "lossCause": "vehcollision",
+                "description": tempClaimInfo.description,
+                "claimNumber": tempClaimInfo.claimNumber,
+                "policy": {
+                    "policyNumber": policyInfo.policyNumber,
+                    "policyType": policyInfo.policyType,
+                    "expirationDate": policyInfo.expirationDate,
+                    "effectiveDate": policyInfo.effectiveDate,
+                    "status": "In force"
+                },
+                "mainContact": {
+                    "contactName": policyInfo.insured,
+                    "policyRole": "insured",
+                    "primaryAddress": {
+                        "addressLine1": policyInfo.address,
+                        "city": policyInfo.city,
+                        "state": policyInfo.state,
+                        "postalCode": policyInfo.zip
+                    }
+                },
+                "relatedContacts": tempClaimInfo.relatedContacts,
+                "lobs": tempClaimInfo.lobs
+            };
+            params.lobs.personalAuto.vehicleIncidents.damageDescription = damageDescription;
+            params.lobs.personalAuto.vehicleIncidents.driver = {
+                "contactName": "Cheryl Mills",
+                "firstName": "Cheryl",
+                "lastName": "Mills",
+                "policyRole": "driver"
+            };
+            params.lobs.personalAuto.vehicleIncidents.vehicle = {
+                "licensePlate": "2GDH967",
+                "make": "Toyota",
+                "model": "Corolla",
+                "state": "CA",
+                "vIN": "3DGF78575GD892534",
+                "year": 1996,
+                "country": "US"
+            };
             var options = {
                 method: 'POST',
                 url: config.base_url + 'cc/service/edge/fnol/fnol',
@@ -210,38 +252,11 @@ module.exports = {
                 body: {
                     "jsonrpc": "2.0",
                     "method": "submitClaim",
-                    "params": [
-                        {
-                            "lossDate": "2018-04-01T00:00:00Z",
-                            "lossType": tempClaimInfo.lossType,
-                            "lossCause": "vehcollision",
-                            "description": tempClaimInfo.description,
-                            "claimNumber": tempClaimInfo.claimNumber,
-                            "policy": {
-                                "policyNumber": policyInfo.searchpolicyinfo.policyNumber,
-                                "policyType": policyInfo.searchpolicyinfo.policyType,
-                                "expirationDate": policyInfo.searchpolicyinfo.expirationDate,
-                                "effectiveDate": policyInfo.searchpolicyinfo.effectiveDate,
-                                "status": "In force"
-                            },
-                            "mainContact": {
-                                "contactName": policyInfo.searchpolicyinfo.insured,
-                                "policyRole": "insured",
-                                "primaryAddress": {
-                                    "addressLine1": policyInfo.searchpolicyinfo.address,
-                                    "city": policyInfo.searchpolicyinfo.city,
-                                    "state": policyInfo.searchpolicyinfo.state,
-                                    "postalCode": policyInfo.searchpolicyinfo.zip
-                                }
-                            },
-                            "relatedContacts": tempClaimInfo.relatedContacts,
-                            "lobs": tempClaimInfo.lobs
-                        }
-                    ]
+                    "params": [params]
                 },
                 json: true
             }
-            console.log(JSON.stringify(options));
+            console.log("options", JSON.stringify(options));
             request(JSON.parse(JSON.stringify(options)), function (error, response, body) {
                 if (error) {
                     console.log('error', error);

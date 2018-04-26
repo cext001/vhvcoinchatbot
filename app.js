@@ -100,7 +100,7 @@ app.post('/api/messages', (req, res) => {
                 console.log('context', req.body.result.contexts[0]);
                 var message = "";
                 var policyNumber = req.body.result.contexts[0].parameters.PolicyNumber;
-                var lossdate = req.body.result.contexts[0].parameters.IncidentDate;
+                var lossdate = req.body.result.contexts[0].parameters.searchpolicyinfo[0].effectiveDate;
                 var losscause = req.body.result.contexts[0].parameters.causeofdamage;
                 return helper.createTempClaim(policyNumber, lossdate, losscause).then((result) => {
                     console.log('create temp claim result', result);

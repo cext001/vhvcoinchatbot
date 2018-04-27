@@ -198,26 +198,6 @@ module.exports = {
     "submitClaim": function (tempClaimInfo, policyInfo, damageDescription) {
         return new Promise(function (resolve, reject) {
             console.log('submitClaim');
-            tempClaimInfo.lobs.personalAuto.vehicleIncidents = [
-                {
-                    "damageDescription": damageDescription,
-                    "driver": {
-                        "contactName": "Cheryl Mills",
-                        "firstName": "Cheryl",
-                        "lastName": "Mills",
-                        "policyRole": "driver"
-                    },
-                    "vehicle": {
-                        "licensePlate": "2GDH967",
-                        "make": "Toyota",
-                        "model": "Corolla",
-                        "state": "CA",
-                        "vIN": "3DGF78575GD892534",
-                        "year": 1996,
-                        "country": "US"
-                    }
-                }
-            ];
             console.log("temp claim info", tempClaimInfo);
             var params = {
                 "lossDate": "2018-04-01T00:00:00Z",
@@ -225,6 +205,7 @@ module.exports = {
                 "lossCause": "vehcollision",
                 "description": tempClaimInfo.description,
                 "claimNumber": tempClaimInfo.claimNumber,
+                "claimType": "PACollisionCov",
                 "policy": {
                     "policyNumber": policyInfo.policyNumber,
                     "policyType": policyInfo.policyType,
@@ -234,18 +215,23 @@ module.exports = {
                 },
                 "mainContact": {
                     "contactName": policyInfo.insured,
+                    "firstName": "Kristie",
+                    "lastName": "Kristie",
+                    "emailAddress1": "kristiekristie@gmail.com",
+                    "workNumber": "530-225-3426",
                     "policyRole": "insured",
                     "primaryAddress": {
                         "addressLine1": policyInfo.address,
+                        "addressLine3": "Street Sacramento",
                         "city": policyInfo.city,
                         "state": policyInfo.state,
+                        "country": "US",
                         "postalCode": policyInfo.zip
                     }
                 },
                 "relatedContacts": tempClaimInfo.relatedContacts,
                 "lobs": tempClaimInfo.lobs
             };
-
 
             var options = {
                 method: 'POST',
@@ -262,7 +248,7 @@ module.exports = {
                     "params": [params]
                 },
                 json: true
-            }
+            };
             console.log("options", JSON.stringify(options));
             request(JSON.parse(JSON.stringify(options)), function (error, response, body) {
                 if (error) {

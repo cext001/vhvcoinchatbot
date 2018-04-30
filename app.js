@@ -24,7 +24,7 @@ app.post('/api/messages', (req, res) => {
                 var IncidentDate = req.body.result.parameters.IncidentDate;
 
                 var selectedPolicyType = req.body.result.contexts[0].parameters.policyType;
-                console.log("Policy effective date: " + effectiveDate + ", IncidentDate: " + req.body.result.parameters.IncidentDate + ", Incident Time: " + req.body.result.parameters.IncidentTime);
+                console.log("Policy effective date: " + effectiveDate + ", IncidentDate: " + req.body.result.parameters.IncidentDate);
 
                 effectiveDate = Date.parse('2018-01-19');
                 expirationDate = Date.parse('2019-01-18');
@@ -32,7 +32,6 @@ app.post('/api/messages', (req, res) => {
 
                 console.log("effectiveDate: "+effectiveDate+" , expirationDate: "+expirationDate+", IncidentDate:"+IncidentDate);
 
-                
                 if ((IncidentDate <= expirationDate && IncidentDate >= effectiveDate)) {
                     console.log("success: incident date falls between effective date and expiration date.");
                     return helper.getLossType().then((result) => {

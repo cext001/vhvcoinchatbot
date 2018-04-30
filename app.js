@@ -19,16 +19,12 @@ app.post('/api/messages', (req, res) => {
                 console.log('context', req.body.result.contexts[0]);
                 var response = {};
                 var lossTypes = {};
-                var effectiveDate = req.body.result.contexts[0].parameters.effectiveDate;
-                var expirationDate = req.body.result.contexts[0].parameters.expirationDate;
-                var IncidentDate = req.body.result.parameters.IncidentDate;
+                var effectiveDate = Date.parse(req.body.result.contexts[0].parameters.effectiveDate);
+                var expirationDate = Date.parse(req.body.result.contexts[0].parameters.expirationDate);
+                var IncidentDate = Date.parse(req.body.result.parameters.IncidentDate);
 
                 var selectedPolicyType = req.body.result.contexts[0].parameters.policyType;
                 console.log("Policy effective date: " + effectiveDate + ", IncidentDate: " + req.body.result.parameters.IncidentDate);
-
-                effectiveDate = Date.parse('2018-01-19');
-                expirationDate = Date.parse('2019-01-18');
-                IncidentDate = Date.parse('2019-06-18');
 
                 console.log("effectiveDate: "+effectiveDate+" , expirationDate: "+expirationDate+", IncidentDate:"+IncidentDate);
 

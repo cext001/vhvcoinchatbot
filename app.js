@@ -9,8 +9,11 @@ app.use(bodyParser.json());
 
 const REST_PORT = process.env.PORT || 3000;
 
+app.use(express.static('public'))
+
 app.post('/api/messages', (req, res) => {
     console.log('Dialogflow Request body: ' + JSON.stringify(req.body));
+    var baseUrl = getBaseUrl(req);
     if (req.body.result) {
         console.log("Action: " + req.body.result.action + ", Intent: " + req.body.result.metadata.intentName);
         switch (req.body.result.action) {
@@ -26,7 +29,7 @@ app.post('/api/messages', (req, res) => {
                 var selectedPolicyType = req.body.result.contexts[0].parameters.policyType;
                 console.log("Policy effective date: " + effectiveDate + ", IncidentDate: " + req.body.result.parameters.IncidentDate);
 
-                console.log("effectiveDate: "+effectiveDate+" , expirationDate: "+expirationDate+", IncidentDate:"+IncidentDate);
+                console.log("effectiveDate: " + effectiveDate + " , expirationDate: " + expirationDate + ", IncidentDate:" + IncidentDate);
 
                 if ((IncidentDate <= expirationDate && IncidentDate >= effectiveDate)) {
                     console.log("success: incident date falls between effective date and expiration date.");
@@ -49,7 +52,7 @@ app.post('/api/messages', (req, res) => {
                                     subtitle: "",
                                     title: "Please select",
                                     type: 1,
-                                    imageUrl: "http://pb-attorneys.com/wp-content/uploads/2015/08/2-car-crash-1.jpg",
+                                    imageUrl: baseUrl + "images/car-crash.jpg",
                                     buttons: lossTypes
                                 }
                             ]
@@ -184,7 +187,7 @@ app.post('/api/messages', (req, res) => {
                                 platform: "skype",
                                 title: "Please select",
                                 type: 1,
-                                imageUrl: "https://sparesboyz.com/wp-content/uploads/2017/07/Auto-Body-Parts.png",
+                                imageUrl: baseUrl + "images/auto-body-parts.png",
                                 buttons: result
                             }
                         ]
@@ -315,7 +318,7 @@ app.post('/api/messages', (req, res) => {
                                 platform: "skype",
                                 title: "Please select",
                                 type: 1,
-                                imageUrl: "https://sparesboyz.com/wp-content/uploads/2017/07/Auto-Body-Parts.png",
+                                imageUrl: baseUrl + "images/auto-body-parts.png",
                                 buttons: result
                             }
                         ]
@@ -428,3 +431,7 @@ app.get('/test', (req, res) => {
 app.listen(REST_PORT, function () {
     console.log('Rest service ready on port ' + REST_PORT);
 });
+
+function getBaseUrl(req) {
+    return req.protocol + '://' + req.headers.host + '/';
+}

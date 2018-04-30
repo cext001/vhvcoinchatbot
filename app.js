@@ -422,12 +422,7 @@ app.post('/api/messages', (req, res) => {
 })
 
 app.get('/test', (req, res) => {
-    return helper.getClaimPaymentDetails().then((result) => {
-        console.log(result);
-    }).catch((err) => {
-        console.log(err);
-    })
-    res.send("aaa");
+    res.send(req.headers.host);
 });
 
 app.listen(REST_PORT, function () {

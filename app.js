@@ -32,6 +32,7 @@ app.post('/api/messages', (req, res) => {
 
                 console.log("effectiveDate: "+effectiveDate+" , expirationDate: "+expirationDate+", IncidentDate:"+IncidentDate);
 
+                
                 if ((IncidentDate <= expirationDate && IncidentDate >= effectiveDate)) {
                     console.log("success: incident date falls between effective date and expiration date.");
                     return helper.getLossType().then((result) => {

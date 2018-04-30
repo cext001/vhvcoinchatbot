@@ -19,40 +19,17 @@ app.post('/api/messages', (req, res) => {
                 console.log('context', req.body.result.contexts[0]);
                 var response = {};
                 var lossTypes = {};
-                var effectiveDate = req.body.result.contexts[0].parameters.effectiveDate;
-                var expirationDate = req.body.result.contexts[0].parameters.expirationDate;
+                var effectiveDate = Date.parse(req.body.result.contexts[0].parameters.effectiveDate);
+                var expirationDate = Date.parse(req.body.result.contexts[0].parameters.expirationDate);
+                var IncidentDate = Date.parse(req.body.result.parameters.IncidentDate);
+
                 var selectedPolicyType = req.body.result.contexts[0].parameters.policyType;
+                console.log("Policy effective date: " + effectiveDate + ", IncidentDate: " + req.body.result.parameters.IncidentDate);
 
-                console.log("Policy effective date: " + effectiveDate + ", IncidentDate: " + req.body.result.parameters.IncidentDate + ", Incident Time: " + req.body.result.parameters.IncidentTime);
+                console.log("effectiveDate: "+effectiveDate+" , expirationDate: "+expirationDate+", IncidentDate:"+IncidentDate);
 
-                var dateFrom = effectiveDate;
-                var dateTo = "02-09-2013";
-                var IncidentDate = req.body.result.parameters.IncidentDate;
-
-                var d1 = effectiveDate.split("-");
-                var d2 = expirationDate.split("-");
-                var c = IncidentDate.split("-");
-
-                var from = new Date(d1[2], parseInt(d1[1]) - 1, d1[0]);
-                var to = new Date(d2[2], parseInt(d2[1]) - 1, d2[0]);
-                var check = new Date(c[2], parseInt(c[1]) - 1, c[0]);
-
-                console.log("check: " + check + ",from:" + from + ",to:" + to);
-
-                if (check > from && check < to) {
-                    console.log("date not matches with policy date");
-                    res.json({
-                        messages: [
-                            {
-                                platform: "skype",
-                                speech: "Invalid date provided.",
-                                type: 0
-                            },
-                        ],
-                        actionIncomplete: true
-                    }).end();
-                } else {
-                    console.log("Incident date should fall within effective date and expiration date.");
+                if ((IncidentDate <= expirationDate && IncidentDate >= effectiveDate)) {
+                    console.log("success: incident date falls between effective date and expiration date.");
                     return helper.getLossType().then((result) => {
                         lossTypes = result;
                         response = {
@@ -80,7 +57,7 @@ app.post('/api/messages', (req, res) => {
                         console.log('final response succ', response);
                         res.json(response).end();
                     }).catch((err) => {
-                        console.log('error', err);
+                        console.log('error getting loss types', err);
                         response = {
                             messages: [
                                 {
@@ -90,9 +67,20 @@ app.post('/api/messages', (req, res) => {
                                 }
                             ]
                         };
-                        console.log('final response errr', response);
                         res.json(response).end();
                     })
+                } else {
+                    console.log('failed: Incident date should fall between effective date and expiry date.');
+                    response = {
+                        messages: [
+                            {
+                                platform: "skype",
+                                speech: "Incident date should fall between effective date and expiry date.",
+                                type: 0
+                            }
+                        ]
+                    };
+                    res.json(response).end();
                 }
                 break;
             case "claim.getcauseofdamage":

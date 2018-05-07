@@ -128,11 +128,11 @@ app.post('/api/messages', (req, res) => {
                 console.log("inside: claim.getcauseofdamage-no-custom-yes");
                 console.log('context', req.body.result.contexts[1]);
                 var searchPolicyInfo = req.body.result.contexts[1].parameters.searchpolicyinfo;
-                var policyType = req.body.result.contexts[0].parameters;
+                var policyType = req.body.result.contexts[0].parameters.claimtype;
                 var policyNumber = searchPolicyInfo.policyNumber;
                 var lossdate = searchPolicyInfo.effectiveDate;
                 var losscause = req.body.result.parameters.causeofdamage;
-                return helper.createTempClaim(policyNumber, lossdate, losscause).then((result) => {
+                return helper.createTempClaim(policyNumber, lossdate, losscause, policyType).then((result) => {
                     console.log('create temp claim result', result);
                     var claimNumber = result.claimNumber;
                     res.json({

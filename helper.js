@@ -71,7 +71,7 @@ module.exports = {
             });
         });
     },
-    "createTempClaim": function (policyNumber, lossdate, losscause) {
+    "createTempClaim": function (policyNumber, lossdate, losscause, policyType) {
         return new Promise(function (resolve, reject) {
             console.log('getLossType');
             var options = {
@@ -85,7 +85,7 @@ module.exports = {
                     },
                 body: {
                     jsonrpc: "2.0", method: "createClaim", params: [policyNumber, {
-                        LossType: "AUTO",
+                        LossType: policyType,
                         LossDate: lossdate,
                         LossCause: losscause,
                         description: "testNewClaim"

@@ -73,6 +73,7 @@ app.post('/api/messages', (req, res) => {
                     console.log("success: incident date falls between effective date and expiration date.");
                     return helper.getPolicyTypes().then((result) => {
                         policyTypes = result;
+                        console.log('result from api XXX', JSON.stringify(policyTypes));
                         response = {
                             messages: [
                                 {

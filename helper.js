@@ -128,7 +128,15 @@ module.exports = {
                     console.log('response', response);
                     reject(error);
                 } else {
-                    resolve(body);
+                    var policyTypes = [];
+                    lodash.forEach(body.result, function (value, key) {
+                        policyTypes.push({
+                            postback: value.code,
+                            text: value.name
+                        });
+                    });
+                    console.log('from helper getpolicytypes', JSON.stringify(policyTypes));
+                    resolve(policyType);
                 }
             });
         });

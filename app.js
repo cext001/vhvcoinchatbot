@@ -407,9 +407,9 @@ app.post('/api/messages', (req, res) => {
             case "claim.getthirdpaartyassistanceinfo":
                 console.log("inside claim.getthirdpaartyassistanceinfo");
                 console.log('context', JSON.stringify(req.body.result.contexts));
-                var tempClaimInfo = req.body.result.contexts[1].parameters.tempclaiminfo;
-                var policyInfo = req.body.result.contexts[2].parameters.searchpolicyinfo[0];
-                var damageDescription = req.body.result.contexts[0].parameters.partsofvehicle + ", " + req.body.result.contexts[3].parameters.partsofvehicle;
+                var tempClaimInfo = req.body.result.contexts[2].parameters.tempclaiminfo;
+                var policyInfo = req.body.result.contexts[3].parameters.searchpolicyinfo[0];
+                var damageDescription = req.body.result.contexts[0].parameters.partsofvehicle + ", " + req.body.result.contexts[4].parameters.partsofvehicle;
 
                 tempClaimInfo.lobs.personalAuto.vehicleIncidents.push({
                     "damageDescription": damageDescription,

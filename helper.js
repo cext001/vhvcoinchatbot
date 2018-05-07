@@ -32,7 +32,7 @@ module.exports = {
                             text: value.name
                         });
                     });
-                    console.log('from helper getpolicytypes', policyTypes);
+                    console.log('from helper getpolicytypes', JSON.stringify(policyTypes));
                     resolve(policyTypes);
                 }
             });

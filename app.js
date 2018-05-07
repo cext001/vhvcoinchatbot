@@ -17,34 +17,73 @@ app.post('/api/messages', (req, res) => {
     if (req.body.result) {
         console.log("Action: " + req.body.result.action + ", Intent: " + req.body.result.metadata.intentName);
         switch (req.body.result.action) {
+            case "claim.getpolicytypes":
+                console.log("inside: claim.getpolicytypes");
+                console.log('context', req.body.result.contexts[0]);
+                var lossTypes = {};
+                return helper.getLossType().then((result) => {
+                    lossTypes = result;
+                    response = {
+                        messages: [
+                            {
+                                platform: "skype",
+                                speech: "Now please help me out with the cause of damage?",
+                                type: 0
+                            },
+                            {
+                                platform: "skype",
+                                subtitle: "",
+                                title: "Please select",
+                                type: 1,
+                                imageUrl: baseUrl + "images/car-crash.jpg",
+                                buttons: lossTypes
+                            }
+                        ]
+                    };
+                    console.log('final response succ', response);
+                    res.json(response).end();
+                }).catch((err) => {
+                    console.log('error getting loss types', err);
+                    response = {
+                        messages: [
+                            {
+                                platform: "skype",
+                                speech: "Something went wrong",
+                                type: 0
+                            }
+                        ]
+                    };
+                    res.json(response).end();
+                });
+                break;
             case "claim.getdateandtime":
                 console.log("inside: claim.getdateandtime");
                 console.log('context', req.body.result.contexts[0]);
                 var response = {};
-                var lossTypes = {};
+                var policyTypes = {};
                 var effectiveDate = Date.parse(req.body.result.contexts[0].parameters.effectiveDate);
                 var expirationDate = Date.parse(req.body.result.contexts[0].parameters.expirationDate);
                 var IncidentDate = Date.parse(req.body.result.parameters.IncidentDate);
 
-                var selectedPolicyType = req.body.result.contexts[0].parameters.policyType;
                 console.log("Policy effective date: " + effectiveDate + ", IncidentDate: " + req.body.result.parameters.IncidentDate);
 
                 console.log("effectiveDate: " + effectiveDate + " , expirationDate: " + expirationDate + ", IncidentDate:" + IncidentDate);
 
                 if ((IncidentDate <= expirationDate && IncidentDate >= effectiveDate)) {
                     console.log("success: incident date falls between effective date and expiration date.");
-                    return helper.getLossType().then((result) => {
-                        lossTypes = result;
+                    return helper.getPolicyTypes().then((result) => {
+                        policyTypes = result;
+                        console.log('result from api XXX', JSON.stringify(policyTypes));
                         response = {
                             messages: [
                                 {
                                     platform: "skype",
-                                    speech: "Selected policy type is: " + selectedPolicyType,
+                                    speech: "Sure, thank you",
                                     type: 0
                                 },
                                 {
                                     platform: "skype",
-                                    speech: "Now please help me out with the cause of damage?",
+                                    speech: "Can you please help me with the type of claim that you want to initiate?",
                                     type: 0
                                 },
                                 {
@@ -52,15 +91,14 @@ app.post('/api/messages', (req, res) => {
                                     subtitle: "",
                                     title: "Please select",
                                     type: 1,
-                                    imageUrl: baseUrl + "images/car-crash.jpg",
-                                    buttons: lossTypes
+                                    buttons: policyTypes
                                 }
                             ]
                         };
-                        console.log('final response succ', response);
+                        console.log('final response succ', JSON.stringify(response));
                         res.json(response).end();
                     }).catch((err) => {
-                        console.log('error getting loss types', err);
+                        console.log('error getting policy types', err);
                         response = {
                             messages: [
                                 {
@@ -71,7 +109,7 @@ app.post('/api/messages', (req, res) => {
                             ]
                         };
                         res.json(response).end();
-                    })
+                    });
                 } else {
                     console.log('failed: Incident date should fall between effective date and expiry date.');
                     response = {
@@ -88,11 +126,12 @@ app.post('/api/messages', (req, res) => {
                 break;
             case "claim.getcauseofdamage":
                 console.log("inside: claim.getcauseofdamage-no-custom-yes");
-                console.log('context', req.body.result.contexts[0]);
-                var message = "";
-                var policyNumber = req.body.result.contexts[0].parameters.PolicyNumber;
-                var lossdate = req.body.result.contexts[0].parameters.searchpolicyinfo[0].effectiveDate;
-                var losscause = req.body.result.contexts[0].parameters.causeofdamage;
+
+                var searchPolicyInfo = req.body.result.contexts[1].parameters.searchpolicyinfo[0];
+                console.log('searchPolicyInfo context', JSON.stringify(searchPolicyInfo));
+                var policyNumber = searchPolicyInfo.policyNumber;
+                var lossdate = searchPolicyInfo.effectiveDate;
+                var losscause = req.body.result.parameters.causeofdamage;
                 return helper.createTempClaim(policyNumber, lossdate, losscause).then((result) => {
                     console.log('create temp claim result', result);
                     var claimNumber = result.claimNumber;
@@ -131,12 +170,11 @@ app.post('/api/messages', (req, res) => {
                     }).end();
                 }).catch((err) => {
                     console.log('create temp claim error', err);
-                    message = "Something went wrong while creating temporary claim.";
                     res.json({
                         messages: [
                             {
                                 platform: "skype",
-                                speech: message,
+                                speech: "Something went wrong while creating temporary claim.",
                                 type: 0
                             }
                         ]
@@ -206,8 +244,6 @@ app.post('/api/messages', (req, res) => {
                 });
                 break;
             case "claim.getpolicynumber":
-                /*console.log("insider claim.getpolicynumber");
-                controller.handlePolicyNumber;*/
                 var out = {};
                 var policyNumber = req.body.result.parameters.PolicyNumber + "";
                 console.log("policyNumber:" + policyNumber);
@@ -371,9 +407,10 @@ app.post('/api/messages', (req, res) => {
             case "claim.getthirdpaartyassistanceinfo":
                 console.log("inside claim.getthirdpaartyassistanceinfo");
                 console.log('context', JSON.stringify(req.body.result.contexts));
-                var tempClaimInfo = req.body.result.contexts[1].parameters.tempclaiminfo;
-                var policyInfo = req.body.result.contexts[2].parameters.searchpolicyinfo[0];
-                var damageDescription = req.body.result.contexts[0].parameters.partsofvehicle + ", " + req.body.result.contexts[3].parameters.partsofvehicle;
+                var tempClaimInfo = req.body.result.contexts[2].parameters.tempclaiminfo;
+                var policyInfo = req.body.result.contexts[3].parameters.searchpolicyinfo[0];
+                console.log("policyinfo", JSON.stringify(req.body.result.contexts[3].parameters));
+                var damageDescription = req.body.result.contexts[0].parameters.partsofvehicle + ", " + req.body.result.contexts[4].parameters.partsofvehicle;
 
                 tempClaimInfo.lobs.personalAuto.vehicleIncidents.push({
                     "damageDescription": damageDescription,
@@ -394,7 +431,9 @@ app.post('/api/messages', (req, res) => {
                     }
                 });
 
-                return helper.submitClaim(tempClaimInfo, policyInfo).then((result) => {
+                var claimtype = req.body.result.contexts[0].parameters.claimtype;
+
+                return helper.submitClaim(tempClaimInfo, policyInfo, claimtype).then((result) => {
                     res.json({
                         messages: [
                             {

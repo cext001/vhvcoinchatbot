@@ -127,7 +127,7 @@ app.post('/api/messages', (req, res) => {
             case "claim.getcauseofdamage":
                 console.log("inside: claim.getcauseofdamage-no-custom-yes");
                 
-                var searchPolicyInfo = req.body.result.contexts[1].parameters.searchpolicyinfo;
+                var searchPolicyInfo = req.body.result.contexts[1].parameters.searchpolicyinfo[0];
                 console.log('searchPolicyInfo context', JSON.stringify(searchPolicyInfo));
                 var policyType = req.body.result.contexts[0].parameters.claimtype;
                 var policyNumber = searchPolicyInfo.policyNumber;

@@ -33,7 +33,7 @@ module.exports = {
                         });
                     });
                     console.log('from helper getpolicytypes', JSON.stringify(policyTypes));
-                    resolve(policyTypes.result);
+                    resolve(policyType);
                 }
             });
         });

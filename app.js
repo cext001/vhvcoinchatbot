@@ -91,7 +91,7 @@ app.post('/api/messages', (req, res) => {
                                     subtitle: "",
                                     title: "Please select",
                                     type: 1,
-                                    buttons: policyTypes
+                                    buttons: policyTypes.result
                                 }
                             ]
                         };

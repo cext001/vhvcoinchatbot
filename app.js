@@ -94,7 +94,7 @@ app.post('/api/messages', (req, res) => {
                                 }
                             ]
                         };
-                        console.log('final response succ', response);
+                        console.log('final response succ', JSON.stringify(response));
                         res.json(response).end();
                     }).catch((err) => {
                         console.log('error getting policy types', err);

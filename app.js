@@ -431,7 +431,9 @@ app.post('/api/messages', (req, res) => {
                     }
                 });
 
-                return helper.submitClaim(tempClaimInfo, policyInfo).then((result) => {
+                var claimtype = req.body.result.contexts[0].parameters.claimtype;
+
+                return helper.submitClaim(tempClaimInfo, policyInfo, claimtype).then((result) => {
                     res.json({
                         messages: [
                             {

@@ -176,7 +176,7 @@ module.exports = {
             });
         });
     },
-    "submitClaim": function (tempClaimInfo, policyInfo, damageDescription) {
+    "submitClaim": function (tempClaimInfo, policyInfo, claimtype) {
         return new Promise(function (resolve, reject) {
             console.log('submitClaim');
             console.log("temp claim info", tempClaimInfo);
@@ -186,7 +186,7 @@ module.exports = {
                 "lossCause": "vehcollision",
                 "description": tempClaimInfo.description,
                 "claimNumber": tempClaimInfo.claimNumber,
-                "claimType": "PACollisionCov",
+                "claimType": claimtype,
                 "policy": {
                     "policyNumber": policyInfo.policyNumber,
                     "policyType": policyInfo.policyType,

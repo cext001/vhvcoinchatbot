@@ -127,12 +127,11 @@ app.post('/api/messages', (req, res) => {
             case "claim.getcauseofdamage":
                 console.log("inside: claim.getcauseofdamage-no-custom-yes");
                 console.log('context', req.body.result.contexts[1]);
-                var searchPolicyInfo = req.body.result.contexts[1].parameters;
+                var searchPolicyInfo = req.body.result.contexts[1].parameters.searchpolicyinfo;
                 var policyType = req.body.result.contexts[0].parameters;
-                var message = "";
-                var policyNumber = searchPolicyInfo.PolicyNumber;
+                var policyNumber = searchPolicyInfo.policyNumber;
                 var lossdate = searchPolicyInfo.effectiveDate;
-                var losscause = policyType.claimtype;
+                var losscause = req.body.result.parameters.causeofdamage;
                 return helper.createTempClaim(policyNumber, lossdate, losscause).then((result) => {
                     console.log('create temp claim result', result);
                     var claimNumber = result.claimNumber;
@@ -171,12 +170,11 @@ app.post('/api/messages', (req, res) => {
                     }).end();
                 }).catch((err) => {
                     console.log('create temp claim error', err);
-                    message = "Something went wrong while creating temporary claim.";
                     res.json({
                         messages: [
                             {
                                 platform: "skype",
-                                speech: message,
+                                speech: "Something went wrong while creating temporary claim.",
                                 type: 0
                             }
                         ]
